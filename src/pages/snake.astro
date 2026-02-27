@@ -1,0 +1,11 @@
+---
+import IDELayout from "../layouts/IDELayout.astro";
+import SnakeInline from "../components/SnakeInline";
+---
+
+<IDELayout title="portfolio_dev — snake.astro" activeFile="snake.astro">
+  <div
+    class="flex-1 flex items-center justify-center overflow-auto bg-vscode-editor">
+    <SnakeInline client:load />
+  </div>
+</IDELayout>

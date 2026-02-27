@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Inter:wght@300..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* ===== DARK THEME (Catppuccin Mocha) ===== */
+  :root,
+  [data-theme="dark"] {
+    --vscode-bg: 30 30 46;
+    --vscode-sidebar: 24 24 37;
+    --vscode-editor: 30 30 46;
+    --vscode-tabs: 17 17 27;
+    --vscode-tabActive: 30 30 46;
+    --vscode-tabInactive: 24 24 37;
+    --vscode-menu: 24 24 37;
+    --vscode-statusbar: 24 24 37;
+    --vscode-border: 49 50 68;
+    --vscode-text: 205 214 244;
+    --vscode-textMuted: 108 112 134;
+    --vscode-textSubtle: 166 173 200;
+    --vscode-accent: 137 180 250;
+    --vscode-accentAlt: 116 199 236;
+    --vscode-green: 166 227 161;
+    --vscode-yellow: 249 226 175;
+    --vscode-pink: 243 139 168;
+    --vscode-mauve: 203 166 247;
+    --vscode-peach: 250 179 135;
+    --vscode-teal: 148 226 213;
+    --vscode-red: 243 139 168;
+    --vscode-surface0: 49 50 68;
+    --vscode-surface1: 69 71 90;
+    --vscode-surface2: 88 91 112;
+    --vscode-overlay0: 108 112 134;
+    --vscode-overlay1: 127 132 156;
+    --vscode-terminal: 17 17 27;
+    --vscode-lineNumber: 69 71 90;
+  }
+
+  /* ===== LIGHT THEME (Cuarzo / Soft White) ===== */
+  [data-theme="light"] {
+    --vscode-bg: 250 250 250; /* #fafafa cuarzo */
+    --vscode-sidebar: 244 244 245; /* #f4f4f5 */
+    --vscode-editor: 250 250 250;
+    --vscode-tabs: 235 235 237; /* #ebebed */
+    --vscode-tabActive: 250 250 250;
+    --vscode-tabInactive: 244 244 245;
+    --vscode-menu: 244 244 245;
+    --vscode-statusbar: 235 235 237;
+    --vscode-border: 228 228 231; /* #e4e4e7 border */
+    --vscode-text: 63 63 70; /* #3f3f46 */
+    --vscode-textMuted: 113 113 122; /* #71717a */
+    --vscode-textSubtle: 161 161 170; /* #a1a1aa */
+    --vscode-accent: 37 99 235; /* blue-600 */
+    --vscode-accentAlt: 2 132 199; /* sky-600 */
+    --vscode-green: 22 163 74; /* green-600 */
+    --vscode-yellow: 202 138 4; /* yellow-600 */
+    --vscode-pink: 219 39 119; /* pink-600 */
+    --vscode-mauve: 147 51 234; /* purple-600 */
+    --vscode-peach: 234 88 12; /* orange-600 */
+    --vscode-teal: 13 148 136; /* teal-600 */
+    --vscode-red: 220 38 38; /* red-600 */
+    --vscode-surface0: 228 228 231;
+    --vscode-surface1: 212 212 216;
+    --vscode-surface2: 161 161 170;
+    --vscode-overlay0: 113 113 122;
+    --vscode-overlay1: 82 82 91;
+    --vscode-terminal: 244 244 245;
+    --vscode-lineNumber: 161 161 170;
+  }
+
+  html {
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    background-color: rgb(var(--vscode-bg));
+    color: rgb(var(--vscode-text));
+    overflow: hidden;
+    height: 100%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--vscode-bg));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--vscode-surface1));
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--vscode-surface2));
+  }
+
+  ::selection {
+    background-color: rgb(var(--vscode-accent) / 0.2);
+  }
+}
+
+@layer components {
+  .line-number {
+    @apply select-none text-right pr-4 text-vscode-lineNumber min-w-[3rem] inline-block;
+    font-size: 0.8125rem;
+  }
+
+  .syntax-keyword { @apply text-vscode-mauve; }
+  .syntax-string { @apply text-vscode-green; }
+  .syntax-variable { @apply text-vscode-accent; }
+  .syntax-function { @apply text-vscode-yellow; }
+  .syntax-comment { @apply text-vscode-overlay0 italic; }
+  .syntax-tag { @apply text-vscode-pink; }
+  .syntax-attribute { @apply text-vscode-peach; }
+  .syntax-punctuation { @apply text-vscode-overlay1; }
+  .syntax-type { @apply text-vscode-teal; }
+  .syntax-number { @apply text-vscode-peach; }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200;
+  }
+
+  .badge-blue {
+    @apply bg-vscode-accent/10 text-vscode-accent border-vscode-accent/30 hover:bg-vscode-accent/20;
+  }
+  .badge-green {
+    @apply bg-vscode-green/10 text-vscode-green border-vscode-green/30 hover:bg-vscode-green/20;
+  }
+  .badge-pink {
+    @apply bg-vscode-pink/10 text-vscode-pink border-vscode-pink/30 hover:bg-vscode-pink/20;
+  }
+  .badge-yellow {
+    @apply bg-vscode-yellow/10 text-vscode-yellow border-vscode-yellow/30 hover:bg-vscode-yellow/20;
+  }
+  .badge-mauve {
+    @apply bg-vscode-mauve/10 text-vscode-mauve border-vscode-mauve/30 hover:bg-vscode-mauve/20;
+  }
+  .badge-peach {
+    @apply bg-vscode-peach/10 text-vscode-peach border-vscode-peach/30 hover:bg-vscode-peach/20;
+  }
+  .badge-teal {
+    @apply bg-vscode-teal/10 text-vscode-teal border-vscode-teal/30 hover:bg-vscode-teal/20;
+  }
+}

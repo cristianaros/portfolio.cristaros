@@ -287,6 +287,7 @@ export default function SnakeGame({ onClose }: { onClose: () => void }) {
             <div className="flex gap-1">
               <div className="w-10 h-10" />
               <button
+                aria-label="Arriba"
                 onMouseDown={() => { if (directionRef.current !== 'DOWN') nextDirectionRef.current = 'UP'; }}
                 className="w-10 h-10 rounded-t-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
               >▲</button>
@@ -294,6 +295,7 @@ export default function SnakeGame({ onClose }: { onClose: () => void }) {
             </div>
             <div className="flex gap-1">
               <button
+                aria-label="Izquierda"
                 onMouseDown={() => { if (directionRef.current !== 'RIGHT') nextDirectionRef.current = 'LEFT'; }}
                 className="w-10 h-10 rounded-l-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
               >◄</button>
@@ -301,6 +303,7 @@ export default function SnakeGame({ onClose }: { onClose: () => void }) {
                 <div className="w-3 h-3 rounded-full bg-[#45475a]" />
               </div>
               <button
+                aria-label="Derecha"
                 onMouseDown={() => { if (directionRef.current !== 'LEFT') nextDirectionRef.current = 'RIGHT'; }}
                 className="w-10 h-10 rounded-r-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
               >►</button>
@@ -308,6 +311,7 @@ export default function SnakeGame({ onClose }: { onClose: () => void }) {
             <div className="flex gap-1">
               <div className="w-10 h-10" />
               <button
+                aria-label="Abajo"
                 onMouseDown={() => { if (directionRef.current !== 'UP') nextDirectionRef.current = 'DOWN'; }}
                 className="w-10 h-10 rounded-b-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
               >▼</button>
@@ -318,10 +322,12 @@ export default function SnakeGame({ onClose }: { onClose: () => void }) {
           {/* Action buttons */}
           <div className="flex justify-center gap-8 mt-3">
             <button
+              aria-label="Botón A (Iniciar)"
               onClick={startGame}
               className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors"
             >A</button>
             <button
+              aria-label="Botón B (Cancelar/Salir)"
               onClick={onClose}
               className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors"
             >B</button>

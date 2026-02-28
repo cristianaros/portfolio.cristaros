@@ -71,6 +71,7 @@ const SettingsToggle: React.FC<{
       {description && <div className="text-[11px] text-vscode-textMuted">{description}</div>}
     </div>
     <button
+      aria-label={label}
       onClick={() => onChange(!checked)}
       className={`relative w-9 h-5 rounded-full transition-colors ${
         checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
@@ -147,6 +148,7 @@ export default function SettingsPanel() {
     <>
       {/* Gear Button */}
       <button
+        aria-label="Configuración"
         onClick={() => setIsOpen(!isOpen)}
         className={`w-10 h-10 flex items-center justify-center transition-colors ${
           isOpen
@@ -193,6 +195,7 @@ export default function SettingsPanel() {
                 Configuración
               </span>
               <button
+                aria-label="Cerrar configuración"
                 onClick={() => setIsOpen(false)}
                 className="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors"
               >

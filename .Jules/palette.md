@@ -1,0 +1,3 @@
+## 2024-05-18 - Added ARIA labels to icon-only buttons
+**Learning:** Many interactive icon-only buttons in complex components (like Terminal, Settings, Game controls) were missing accessibility labels, making them unusable for screen readers.
+**Action:** Always ensure any button that relies solely on an icon has a descriptive `aria-label` (and often a `title` for tooltip behavior) to describe its function.

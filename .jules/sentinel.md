@@ -1,0 +1,4 @@
+## 2024-05-24 - [Missing noreferrer on target="_blank" links]
+**Vulnerability:** External links opening in a new tab (`target="_blank"`) using only `rel="noopener"` without `noreferrer`.
+**Learning:** While `noopener` secures against the newly opened window potentially redirecting the original page, not having `noreferrer` means that referral information (like the current URL) is passed to the external site, which might be a privacy leak depending on the context. Sometimes developers assume `noopener` is sufficient for all security considerations, but `noreferrer` also implies `noopener` in modern browsers and provides an extra layer of privacy.
+**Prevention:** Always add both `noopener noreferrer` (or at least `noreferrer`) to all external `target="_blank"` links.

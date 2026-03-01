@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { projects, type Project } from '../data/projects';
 
 const categoryColors: Record<string, string> = {
@@ -7,10 +7,14 @@ const categoryColors: Record<string, string> = {
   SaaS: 'badge-mauve',
 };
 
-const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => (
+function hasAnimated(): boolean {
+  try { return sessionStorage.getItem('projects-animated') === 'true'; } catch { return false; }
+}
+
+const ProjectCard: React.FC<{ project: Project; index: number; skipAnim: boolean }> = ({ project, index, skipAnim }) => (
   <div
-    className="group bg-vscode-sidebar border border-vscode-border rounded-lg overflow-hidden hover:border-vscode-accent/50 transition-all duration-300 hover:shadow-lg hover:shadow-vscode-accent/5 animate-slide-up"
-    style={{ animationDelay: `${index * 100}ms` }}
+    className={`group bg-vscode-sidebar border border-vscode-border rounded-lg overflow-hidden hover:border-vscode-accent/50 transition-all duration-300 hover:shadow-lg hover:shadow-vscode-accent/5 ${skipAnim ? '' : 'animate-slide-up'}`}
+    style={skipAnim ? undefined : { animationDelay: `${index * 100}ms` }}
   >
     {/* Card Header */}
     <div className="p-5 flex flex-col gap-3">
@@ -79,6 +83,13 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
 
 export default function ProjectGallery() {
   const [filter, setFilter] = useState<string>('all');
+  const alreadyAnimated = hasAnimated();
+
+  useEffect(() => {
+    if (!alreadyAnimated) {
+      try { sessionStorage.setItem('projects-animated', 'true'); } catch {}
+    }
+  }, []);
 
   const categories = ['all', ...new Set(projects.map(p => p.category))];
   const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
@@ -118,7 +129,7 @@ export default function ProjectGallery() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filtered.map((project, idx) => (
-          <ProjectCard key={project.id} project={project} index={idx} />
+          <ProjectCard key={project.id} project={project} index={idx} skipAnim={alreadyAnimated} />
         ))}
       </div>
     </div>

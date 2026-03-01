@@ -82,7 +82,9 @@
     color: rgb(var(--vscode-text));
     overflow: hidden;
     height: 100%;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 
   body {
@@ -116,16 +118,36 @@
     font-size: 0.8125rem;
   }
 
-  .syntax-keyword { @apply text-vscode-mauve; }
-  .syntax-string { @apply text-vscode-green; }
-  .syntax-variable { @apply text-vscode-accent; }
-  .syntax-function { @apply text-vscode-yellow; }
-  .syntax-comment { @apply text-vscode-overlay0 italic; }
-  .syntax-tag { @apply text-vscode-pink; }
-  .syntax-attribute { @apply text-vscode-peach; }
-  .syntax-punctuation { @apply text-vscode-overlay1; }
-  .syntax-type { @apply text-vscode-teal; }
-  .syntax-number { @apply text-vscode-peach; }
+  .syntax-keyword {
+    @apply text-vscode-mauve;
+  }
+  .syntax-string {
+    @apply text-vscode-green;
+  }
+  .syntax-variable {
+    @apply text-vscode-accent;
+  }
+  .syntax-function {
+    @apply text-vscode-yellow;
+  }
+  .syntax-comment {
+    @apply text-vscode-overlay0 italic;
+  }
+  .syntax-tag {
+    @apply text-vscode-pink;
+  }
+  .syntax-attribute {
+    @apply text-vscode-peach;
+  }
+  .syntax-punctuation {
+    @apply text-vscode-overlay1;
+  }
+  .syntax-type {
+    @apply text-vscode-teal;
+  }
+  .syntax-number {
+    @apply text-vscode-peach;
+  }
 
   .badge {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200;
@@ -151,5 +173,13 @@
   }
   .badge-teal {
     @apply bg-vscode-teal/10 text-vscode-teal border-vscode-teal/30 hover:bg-vscode-teal/20;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }

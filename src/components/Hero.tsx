@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BlurText, ShinyText } from './reactbits/TextAnimations';
 import { AnimatedContent, Magnet } from './reactbits/Animations';
 
@@ -19,12 +19,30 @@ const EmptyLine: React.FC<{ number: number }> = ({ number }) => (
   <Line number={number}><span>&nbsp;</span></Line>
 );
 
+function hasAnimated(): boolean {
+  try { return sessionStorage.getItem('hero-animated') === 'true'; } catch { return false; }
+}
+
 export default function Hero() {
-  const [isVisible, setIsVisible] = useState(false);
+  const alreadyAnimated = hasAnimated();
+  const [isVisible, setIsVisible] = useState(alreadyAnimated);
 
   useEffect(() => {
-    setIsVisible(true);
+    if (!alreadyAnimated) {
+      setIsVisible(true);
+      // Mark as animated after the entrance finishes
+      const timer = setTimeout(() => {
+        try { sessionStorage.setItem('hero-animated', 'true'); } catch {}
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  // Wrapper: skip AnimatedContent delays if already animated
+  const Wrap: React.FC<{ delay: number; children: React.ReactNode }> = ({ delay, children }) => {
+    if (alreadyAnimated) return <>{children}</>;
+    return <AnimatedContent delay={delay}>{children}</AnimatedContent>;
+  };
 
   return (
     <div className={`transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
@@ -39,7 +57,7 @@ export default function Hero() {
 
       {/* Line 5: Greeting tag */}
       <Line number={5}>
-        <AnimatedContent delay={200}>
+        <Wrap delay={200}>
           <span className="syntax-punctuation">{'<'}</span>
           <span className="syntax-tag">Greeting</span>
           <span className="syntax-attribute"> user</span>
@@ -47,35 +65,39 @@ export default function Hero() {
           <span className="syntax-string">Recruiter</span>
           <span className="syntax-punctuation">{'"'}</span>
           <span className="syntax-punctuation">{' />'}</span>
-        </AnimatedContent>
+        </Wrap>
       </Line>
 
       <EmptyLine number={6} />
 
       {/* Line 7: Title with BlurText animation */}
       <Line number={7} className="!items-center">
-        <AnimatedContent delay={400}>
+        <Wrap delay={400}>
           <h1 className="text-4xl md:text-5xl font-bold text-vscode-text leading-tight py-2">
-            <BlurText text="Hola, soy" delay={80} />
+            {alreadyAnimated ? (
+              <span>Hola, soy</span>
+            ) : (
+              <BlurText text="Hola, soy" delay={80} />
+            )}
             {' '}
             <ShinyText text="Cristian" className="text-4xl md:text-5xl font-bold" speed={4} />
             {' '}👋
           </h1>
-        </AnimatedContent>
+        </Wrap>
       </Line>
 
       <EmptyLine number={8} />
 
       {/* Line 9: Description */}
       <Line number={9}>
-        <AnimatedContent delay={700}>
+        <Wrap delay={700}>
           <p className="text-base md:text-lg text-vscode-textSubtle leading-relaxed max-w-2xl">
             Soy un <span className="text-vscode-accent font-semibold">Ingeniero Civil Informático</span> enfocado en construir
             aplicaciones web modernas, escalables y con arquitectura limpia.
             Busco crecer como <span className="text-vscode-green font-semibold">desarrollador full stack</span>, priorizando
             código limpio, buenas prácticas y diseño centrado en el usuario.
           </p>
-        </AnimatedContent>
+        </Wrap>
       </Line>
 
       <EmptyLine number={10} />
@@ -84,7 +106,7 @@ export default function Hero() {
 
       {/* Line 13: Badges */}
       <Line number={13}>
-        <AnimatedContent delay={200}>
+        <Wrap delay={200}>
           <div className="flex flex-wrap gap-2 py-1">
             <span className="badge badge-mauve">
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
@@ -95,7 +117,7 @@ export default function Hero() {
               Performance
             </span>
           </div>
-        </AnimatedContent>
+        </Wrap>
       </Line>
 
       <EmptyLine number={14} />
@@ -103,12 +125,12 @@ export default function Hero() {
 
       {/* Line 16: Buttons */}
       <Line number={16}>
-        <AnimatedContent delay={200}>
+        <Wrap delay={200}>
           <div className="flex flex-wrap gap-3 py-2">
             <Magnet strength={0.15}>
               <a
                 href="/cv.pdf"
-                download="Cristian_Aros_CV.pdf"
+                download="CristianAros_CV_DesarrolladorSoftwareJunior.pdf"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-vscode-accent text-vscode-bg font-semibold text-sm rounded-md hover:bg-vscode-accent/90 transition-all duration-200 hover:shadow-lg hover:shadow-vscode-accent/25 active:scale-95"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -125,7 +147,7 @@ export default function Hero() {
               </a>
             </Magnet>
           </div>
-        </AnimatedContent>
+        </Wrap>
       </Line>
 
       <EmptyLine number={17} />

@@ -45,9 +45,12 @@ function applySettings(settings: Settings) {
     cascadia: '"Cascadia Code", monospace',
   };
 
-  // Apply font size and family to the entire body
-  document.body.style.fontSize = sizeMap[settings.fontSize];
-  document.body.style.fontFamily = fontMap[settings.fontFamily];
+  // Apply font size and family only to editor content (not UI chrome)
+  const editorEls = document.querySelectorAll('#editor-content');
+  editorEls.forEach((el) => {
+    (el as HTMLElement).style.fontSize = sizeMap[settings.fontSize];
+    (el as HTMLElement).style.fontFamily = fontMap[settings.fontFamily];
+  });
 
   // Toggle line numbers
   document.querySelectorAll('.line-number').forEach((el) => {
@@ -125,6 +128,13 @@ export default function SettingsPanel() {
     applySettings(loaded);
   }, []);
 
+  // Listen for external toggle events (from config.json button)
+  useEffect(() => {
+    const handler = () => setIsOpen((prev) => !prev);
+    window.addEventListener('toggle-settings', handler);
+    return () => window.removeEventListener('toggle-settings', handler);
+  }, []);
+
   const updateSetting = useCallback(<K extends keyof Settings>(key: K, value: Settings[K]) => {
     setSettings((prev) => {
       const next = { ...prev, [key]: value };
@@ -173,22 +183,18 @@ export default function SettingsPanel() {
 
       {/* Overlay Panel */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-50" onClick={() => setIsOpen(false)}>
           {/* Click-outside backdrop */}
           <div className="absolute inset-0 bg-black/20" />
 
-          {/* Panel (from left, next to activity bar) */}
+          {/* Panel — fixed to the left, next to the activity bar */}
           <div
-            className="relative ml-[48px] w-80 h-full border-r border-vscode-border shadow-2xl overflow-y-auto animate-slide-in-left"
+            className="fixed left-12 top-0 bottom-0 w-80 bg-vscode-sidebar border-r border-vscode-border shadow-2xl overflow-y-auto z-50"
             onClick={(e) => e.stopPropagation()}
-            style={{
-              animation: 'slideInLeft 0.2s ease-out',
-              backgroundColor: `rgb(var(--vscode-sidebar, 24 24 37))`,
-              color: `rgb(var(--vscode-text, 205 214 244))`,
-            }}
+            style={{ animation: 'slideInLeft 0.2s ease-out' }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-vscode-border sticky top-0 z-10" style={{ backgroundColor: `rgb(var(--vscode-sidebar, 24 24 37))` }}>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-vscode-border sticky top-0 z-10 bg-vscode-sidebar">
               <span className="text-[13px] font-semibold text-vscode-text uppercase tracking-wider">
                 Configuración
               </span>
@@ -282,13 +288,6 @@ export default function SettingsPanel() {
               </div>
 
               <div className="border-t border-vscode-border/50 my-2" />
-
-              {/* === Easter Egg Hint === */}
-              <div className="py-2 px-1">
-                <div className="text-[11px] text-vscode-textMuted italic text-center opacity-60">
-                  ↑ ↑ ↓ ↓ ← → ← → B A
-                </div>
-              </div>
             </div>
           </div>
         </div>

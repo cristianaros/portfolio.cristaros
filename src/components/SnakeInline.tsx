@@ -216,9 +216,9 @@ export default function SnakeInline() {
   };
 
   return (
-    <div className="flex items-center justify-center h-full w-full overflow-auto py-6">
+    <div className="flex items-center justify-center h-full w-full overflow-auto py-6 px-4">
       {/* Nokia Phone Frame */}
-      <div className="bg-[#2c2c3a] rounded-[2rem] p-6 shadow-2xl border border-[#45475a]" style={{ minWidth: '340px' }}>
+      <div className="bg-[#2c2c3a] rounded-[2rem] p-4 sm:p-6 shadow-2xl border border-[#45475a] max-w-full" style={{ minWidth: 'min(340px, 100%)' }}>
         {/* Brand */}
         <div className="text-center mb-3">
           <span className="text-[13px] tracking-[0.3em] uppercase text-[#6c7086] font-bold">PORTFOLIO</span>

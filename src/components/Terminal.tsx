@@ -32,8 +32,23 @@ const lines: TerminalLine[] = [
   },
 ];
 
+function hasAnimated(): boolean {
+  try {
+    return sessionStorage.getItem('terminal-animated') === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function markAnimated() {
+  try {
+    sessionStorage.setItem('terminal-animated', 'true');
+  } catch {}
+}
+
 export default function Terminal() {
-  const [visibleLines, setVisibleLines] = useState(0);
+  const alreadyAnimated = hasAnimated();
+  const [visibleLines, setVisibleLines] = useState(alreadyAnimated ? lines.length : 0);
   const [isVisible, setIsVisible] = useState(() => {
     try {
       const stored = localStorage.getItem('portfolio-settings');
@@ -46,10 +61,14 @@ export default function Terminal() {
   });
 
   useEffect(() => {
+    // Skip animation if already played this session
+    if (alreadyAnimated) return;
+
     const interval = setInterval(() => {
       setVisibleLines(prev => {
         if (prev >= lines.length) {
           clearInterval(interval);
+          markAnimated();
           return prev;
         }
         return prev + 1;
@@ -97,8 +116,8 @@ export default function Terminal() {
         {lines.slice(0, visibleLines).map((line, idx) => (
           <div
             key={idx}
-            className="animate-fade-in"
-            style={{ animationDelay: `${idx * 100}ms` }}
+            className={alreadyAnimated ? '' : 'animate-fade-in'}
+            style={alreadyAnimated ? undefined : { animationDelay: `${idx * 100}ms` }}
           >
             {line.prompt ? (
               <div className="flex items-center gap-2 flex-wrap">

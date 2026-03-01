@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface LineProps {
   number: number;
@@ -35,11 +35,22 @@ const TechBadge: React.FC<{ icon: string; name: string; color: string }> = ({ ic
   );
 };
 
+function hasAnimated(): boolean {
+  try { return sessionStorage.getItem('codeblock-animated') === 'true'; } catch { return false; }
+}
+
 export default function CodeBlock() {
   const startLine = 19;
+  const alreadyAnimated = hasAnimated();
+
+  useEffect(() => {
+    if (!alreadyAnimated) {
+      try { sessionStorage.setItem('codeblock-animated', 'true'); } catch {}
+    }
+  }, []);
 
   return (
-    <div className="animate-fade-in">
+    <div className={alreadyAnimated ? '' : 'animate-fade-in'}>
       {/* const stackTecnologico = { */}
       <Line number={startLine}>
         <span>

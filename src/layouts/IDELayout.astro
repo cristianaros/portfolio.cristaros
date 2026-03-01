@@ -1,5 +1,6 @@
 ---
 import ActivityBarWidgets from "../components/ActivityBarWidgets";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -15,6 +16,12 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1e1e2e" />
+    <meta property="og:title" content="Portfolio | Cristian Aros" />
+    <meta property="og:description" content="Portfolio profesional simulando Visual Studio Code — Ingeniero Civil Informático y Desarrollador Full Stack." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://portfolio.cristaros.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="description"
       content="Portfolio profesional de Cristian Aros — Ingeniero Civil Informático y Desarrollador de Software"
@@ -22,6 +29,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
     <meta name="author" content="Cristian Aros" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <ClientRouter />
     <script is:inline>
       // Prevent flash of wrong theme
       (function () {
@@ -169,7 +177,8 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <!-- Explorer (active) -->
         <button
           class="w-10 h-10 flex items-center justify-center text-vscode-text border-l-2 border-vscode-accent rounded-none hover:bg-vscode-surface0/30 transition-colors"
-          title="Explorador">
+          title="Explorador"
+          aria-label="Explorador">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
             ><path
               d="M17.5 0h-9L7 1.5V6H2.5L1 7.5v15.07L2.5 24h12.07L16 22.57V18h4.7l1.3-1.43V4.5L17.5 0zm0 2.12l2.38 2.38H17.5V2.12zm-3 20.38h-12v-15H7v9.07L8.5 18h6v4.5zm6-6h-12v-15H16V6h4.5v10.5z"
@@ -180,7 +189,8 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <!-- Search -->
         <button
           class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors"
-          title="Buscar">
+          title="Buscar"
+          aria-label="Buscar">
           <svg
             class="w-5 h-5"
             fill="none"
@@ -197,7 +207,8 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <!-- Source Control -->
         <button
           class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors relative"
-          title="Control de código fuente">
+          title="Control de código fuente"
+          aria-label="Control de código fuente">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
             ><path
               d="M21.007 8.222A3.738 3.738 0 0 0 15.045 5.2a3.737 3.737 0 0 0 1.156 6.583 2.988 2.988 0 0 1-2.668 1.67h-2.99a4.456 4.456 0 0 0-2.989 1.165V7.559a3.738 3.738 0 1 0-1.494 0v8.882a3.738 3.738 0 1 0 1.494.028 2.99 2.99 0 0 1 2.989-2.758h2.99a4.489 4.489 0 0 0 4.223-3.11 3.746 3.746 0 0 0 3.251-2.379zM3.01 3.987A2.24 2.24 0 1 1 5.25 6.227 2.24 2.24 0 0 1 3.01 3.987zm4.48 16.026a2.24 2.24 0 1 1-2.24-2.24 2.24 2.24 0 0 1 2.24 2.24zM18.258 9.84a2.24 2.24 0 1 1 2.24-2.24 2.24 2.24 0 0 1-2.24 2.24z"
@@ -212,7 +223,8 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <!-- Extensions -->
         <button
           class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors"
-          title="Extensiones">
+          title="Extensiones"
+          aria-label="Extensiones">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
             ><path
               d="M13.5 1.515a3 3 0 0 0-3 0L7.5 3.026 4.567 1.529a3 3 0 0 0-3 0A3 3 0 0 0 .067 4.037v5.072a3 3 0 0 0 1.5 2.598L4.5 13.2v2.972a3 3 0 0 0 1.5 2.598l3 1.733a3 3 0 0 0 3 0l3-1.733a3 3 0 0 0 1.5-2.598V13.2l2.933-1.494A3 3 0 0 0 20.933 9.1V4.037a3 3 0 0 0-1.5-2.508 3 3 0 0 0-3 0L13.5 3.026l-3-1.511z"
@@ -225,7 +237,8 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <!-- User -->
         <button
           class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors"
-          title="Cuenta">
+          title="Cuenta"
+          aria-label="Cuenta">
           <svg
             class="w-5 h-5"
             fill="none"
@@ -246,13 +259,19 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
 
       <!-- ===== SIDEBAR EXPLORER (hidden on mobile) ===== -->
       <aside
+<<<<<<< HEAD
         class="hidden md:flex w-56 bg-vscode-sidebar border-r border-vscode-border flex-col shrink-0 select-none">
+=======
+        class="w-56 bg-vscode-sidebar border-r border-vscode-border hidden md:flex flex-col shrink-0 select-none">
+>>>>>>> 72eba10aee49baf371e42729088083af6d24b880
         <!-- Explorer Header -->
         <div
           class="flex items-center justify-between px-4 py-2 text-[11px] tracking-wider uppercase text-vscode-textMuted">
           <span>Explorador</span>
           <button
             class="hover:text-vscode-text transition-colors text-lg leading-none"
+            aria-label="Más acciones del explorador"
+            title="Más acciones del explorador"
             >···</button
           >
         </div>
@@ -418,7 +437,11 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
       <main class="flex-1 flex flex-col overflow-hidden">
         <!-- Tab Bar -->
         <div
+<<<<<<< HEAD
           class="flex items-center bg-vscode-tabs border-b border-vscode-border h-9 shrink-0 overflow-x-auto scrollbar-none">
+=======
+          class="flex items-center bg-vscode-tabs border-b border-vscode-border h-9 shrink-0 overflow-x-auto scrollbar-hide">
+>>>>>>> 72eba10aee49baf371e42729088083af6d24b880
           <a
             href="/"
             class={`flex items-center gap-2 px-4 py-1.5 text-[13px] border-r border-vscode-border h-full transition-colors shrink-0 ${activeFile === "README.md" ? "bg-vscode-tabActive text-vscode-text border-t-2 border-t-vscode-accent" : "bg-vscode-tabInactive text-vscode-textMuted hover:text-vscode-text"}`}>
@@ -498,17 +521,26 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
 
           <div class="flex-1"></div>
 
+<<<<<<< HEAD
           <!-- Layout toggle buttons (hidden on mobile) -->
           <div class="hidden md:flex items-center gap-1 pr-3">
+=======
+          <!-- Layout toggle buttons -->
+          <div class="flex items-center gap-1 pr-3 hidden md:flex">
+>>>>>>> 72eba10aee49baf371e42729088083af6d24b880
             <button
-              class="p-1 text-vscode-textMuted hover:text-vscode-text transition-colors">
+              class="p-1 text-vscode-textMuted hover:text-vscode-text transition-colors"
+              aria-label="Toggle Panel"
+              title="Toggle Panel">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"
                 ><path d="M1 1h6v6H1V1zm8 0h6v6H9V1zM1 9h6v6H1V9zm8 0h6v6H9V9z"
                 ></path></svg
               >
             </button>
             <button
-              class="p-1 text-vscode-textMuted hover:text-vscode-text transition-colors">
+              class="p-1 text-vscode-textMuted hover:text-vscode-text transition-colors"
+              aria-label="Toggle Secondary Side Bar"
+              title="Toggle Secondary Side Bar">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"
                 ><path d="M1 1h14v3H1V1zm0 5h14v3H1V6zm0 5h14v3H1v-3z"
                 ></path></svg

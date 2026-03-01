@@ -1,12 +1,19 @@
 ---
 import IDELayout from "../layouts/IDELayout.astro";
 import SnakeInline from "../components/SnakeInline";
+<<<<<<< HEAD
 import "../styles/global.css";
+=======
+import Terminal from "../components/Terminal";
+>>>>>>> 72eba10aee49baf371e42729088083af6d24b880
 ---
 
 <IDELayout title="portfolio_dev — snake.astro" activeFile="snake.astro">
-  <div
-    class="flex-1 flex items-center justify-center overflow-auto bg-vscode-editor">
-    <SnakeInline client:load />
+  <div class="flex flex-col h-full">
+    <div
+      class="flex-1 flex items-center justify-center overflow-auto bg-vscode-editor">
+      <SnakeInline client:load />
+    </div>
+    <Terminal client:visible transition:persist="terminal" />
   </div>
 </IDELayout>

@@ -1,0 +1,3 @@
+## 2024-05-18 - Settings Panel Accessibility Improvements
+**Learning:** In the VS Code IDE-style UI, building visually accurate custom components like settings toggles and segment controls can lead to them being entirely inaccessible if they just use standard `<div>` or `<button>` tags without semantic roles.
+**Action:** When implementing custom interactive controls that emulate checkboxes or radio buttons, always use `role="switch"` or `role="radio"` combined with `aria-checked` and properly link them to their text descriptions using `aria-labelledby`. Ensure `focus-visible` styles are included to allow keyboard navigation while maintaining the sleek visual design when clicking with a mouse.

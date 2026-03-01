@@ -158,19 +158,11 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-<<<<<<< HEAD
 		
 	};
 
 	type DataEntryMap = {
 		
-=======
-
-	};
-
-	type DataEntryMap = {
-
->>>>>>> 72eba10aee49baf371e42729088083af6d24b880
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
@@ -202,10 +194,6 @@ declare module 'astro:content' {
 		LiveContentConfig['collections'][C]['loader']
 	>;
 
-<<<<<<< HEAD
 	export type ContentConfig = typeof import("./../src/content.config.mjs");
-=======
-	export type ContentConfig = typeof import("../src/content.config.mjs");
->>>>>>> 72eba10aee49baf371e42729088083af6d24b880
 	export type LiveContentConfig = never;
 }

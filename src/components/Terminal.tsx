@@ -140,7 +140,7 @@ export default function Terminal() {
                   href={line.link}
                   className="text-vscode-accent underline hover:text-vscode-accentAlt transition-colors"
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                 >
                   {line.link}
                 </a>

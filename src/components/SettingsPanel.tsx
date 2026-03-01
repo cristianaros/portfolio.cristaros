@@ -67,26 +67,33 @@ const SettingsToggle: React.FC<{
   description?: string;
   checked: boolean;
   onChange: (val: boolean) => void;
-}> = ({ label, description, checked, onChange }) => (
-  <div className="flex items-center justify-between py-2 px-1 group">
-    <div>
-      <div className="text-[13px] text-vscode-text">{label}</div>
-      {description && <div className="text-[11px] text-vscode-textMuted">{description}</div>}
-    </div>
-    <button
-      onClick={() => onChange(!checked)}
-      className={`relative w-9 h-5 rounded-full transition-colors ${
-        checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
-      }`}
-    >
-      <span
-        className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
-          checked ? 'translate-x-4' : ''
+}> = ({ label, description, checked, onChange }) => {
+  const labelId = `toggle-label-${label.replace(/\s+/g, '-').toLowerCase()}`;
+  return (
+    <div className="flex items-center justify-between py-2 px-1 group">
+      <div>
+        <div id={labelId} className="text-[13px] text-vscode-text">{label}</div>
+        {description && <div className="text-[11px] text-vscode-textMuted">{description}</div>}
+      </div>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        aria-labelledby={labelId}
+        onClick={() => onChange(!checked)}
+        className={`relative w-9 h-5 rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-vscode-accent focus-visible:outline-offset-2 ${
+          checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
         }`}
-      />
-    </button>
-  </div>
-);
+      >
+        <span
+          className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+            checked ? 'translate-x-4' : ''
+          }`}
+        />
+      </button>
+    </div>
+  );
+};
 
 // ========== Settings Select Section ==========
 const SettingsSelect: React.FC<{
@@ -95,27 +102,33 @@ const SettingsSelect: React.FC<{
   value: string;
   options: { value: string; label: string }[];
   onChange: (val: string) => void;
-}> = ({ label, description, value, options, onChange }) => (
-  <div className="py-2 px-1">
-    <div className="text-[13px] text-vscode-text mb-1">{label}</div>
-    {description && <div className="text-[11px] text-vscode-textMuted mb-2">{description}</div>}
-    <div className="flex gap-1">
-      {options.map((opt) => (
-        <button
-          key={opt.value}
-          onClick={() => onChange(opt.value)}
-          className={`px-3 py-1 text-[12px] rounded border transition-colors ${
-            value === opt.value
-              ? 'bg-vscode-accent/20 border-vscode-accent text-vscode-accent'
-              : 'bg-vscode-surface0/30 border-vscode-border text-vscode-textMuted hover:text-vscode-text hover:border-vscode-textSubtle'
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
+}> = ({ label, description, value, options, onChange }) => {
+  const groupId = `select-group-${label.replace(/\s+/g, '-').toLowerCase()}`;
+  return (
+    <div className="py-2 px-1">
+      <div id={groupId} className="text-[13px] text-vscode-text mb-1">{label}</div>
+      {description && <div className="text-[11px] text-vscode-textMuted mb-2">{description}</div>}
+      <div role="radiogroup" aria-labelledby={groupId} className="flex gap-1">
+        {options.map((opt) => (
+          <button
+            key={opt.value}
+            type="button"
+            role="radio"
+            aria-checked={value === opt.value}
+            onClick={() => onChange(opt.value)}
+            className={`px-3 py-1 text-[12px] rounded border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-vscode-accent focus-visible:outline-offset-1 ${
+              value === opt.value
+                ? 'bg-vscode-accent/20 border-vscode-accent text-vscode-accent'
+                : 'bg-vscode-surface0/30 border-vscode-border text-vscode-textMuted hover:text-vscode-text hover:border-vscode-textSubtle'
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ========== Main Settings Panel ==========
 export default function SettingsPanel() {
@@ -157,8 +170,11 @@ export default function SettingsPanel() {
     <>
       {/* Gear Button */}
       <button
+        type="button"
+        aria-label="Abrir panel de configuración"
+        aria-expanded={isOpen}
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-10 h-10 flex items-center justify-center transition-colors ${
+        className={`w-10 h-10 flex items-center justify-center transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-vscode-accent focus-visible:outline-offset-[-2px] ${
           isOpen
             ? 'text-vscode-text bg-vscode-surface0/30'
             : 'text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30'
@@ -199,8 +215,10 @@ export default function SettingsPanel() {
                 Configuración
               </span>
               <button
+                type="button"
+                aria-label="Cerrar panel de configuración"
                 onClick={() => setIsOpen(false)}
-                className="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors"
+                className="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-vscode-accent"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />

@@ -1,0 +1,3 @@
+## 2024-05-18 - Improve SettingsPanel and Terminal Accessibility
+**Learning:** Found multiple custom UI components (toggle switches, option buttons, and icon-only action buttons) lacking fundamental accessibility features like `role`, `aria-checked`, `aria-label`, and `aria-pressed`, along with missing visual keyboard focus indicators.
+**Action:** When creating or modifying custom interactive elements (like switches or stylized radio buttons) in React components, ensure semantic roles and states are properly conveyed to screen readers. Always add `focus-visible` styles using the existing design system to make keyboard navigation clear and accessible.

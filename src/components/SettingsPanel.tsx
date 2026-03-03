@@ -75,7 +75,10 @@ const SettingsToggle: React.FC<{
     </div>
     <button
       onClick={() => onChange(!checked)}
-      className={`relative w-9 h-5 rounded-full transition-colors ${
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      className={`relative w-9 h-5 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent ${
         checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
       }`}
     >
@@ -99,12 +102,14 @@ const SettingsSelect: React.FC<{
   <div className="py-2 px-1">
     <div className="text-[13px] text-vscode-text mb-1">{label}</div>
     {description && <div className="text-[11px] text-vscode-textMuted mb-2">{description}</div>}
-    <div className="flex gap-1">
+    <div className="flex gap-1" role="radiogroup" aria-label={label}>
       {options.map((opt) => (
         <button
           key={opt.value}
           onClick={() => onChange(opt.value)}
-          className={`px-3 py-1 text-[12px] rounded border transition-colors ${
+          role="radio"
+          aria-checked={value === opt.value}
+          className={`px-3 py-1 text-[12px] rounded border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent ${
             value === opt.value
               ? 'bg-vscode-accent/20 border-vscode-accent text-vscode-accent'
               : 'bg-vscode-surface0/30 border-vscode-border text-vscode-textMuted hover:text-vscode-text hover:border-vscode-textSubtle'
@@ -158,7 +163,9 @@ export default function SettingsPanel() {
       {/* Gear Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-10 h-10 flex items-center justify-center transition-colors ${
+        aria-label="Configuración"
+        aria-expanded={isOpen}
+        className={`w-10 h-10 flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent ${
           isOpen
             ? 'text-vscode-text bg-vscode-surface0/30'
             : 'text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30'

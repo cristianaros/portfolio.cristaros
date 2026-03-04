@@ -70,12 +70,16 @@ const SettingsToggle: React.FC<{
 }> = ({ label, description, checked, onChange }) => (
   <div className="flex items-center justify-between py-2 px-1 group">
     <div>
-      <div className="text-[13px] text-vscode-text">{label}</div>
-      {description && <div className="text-[11px] text-vscode-textMuted">{description}</div>}
+      <div className="text-[13px] text-vscode-text" id={`toggle-label-${label.replace(/\s+/g, '-')}`}>{label}</div>
+      {description && <div className="text-[11px] text-vscode-textMuted" id={`toggle-desc-${label.replace(/\s+/g, '-')}`}>{description}</div>}
     </div>
     <button
+      role="switch"
+      aria-checked={checked}
+      aria-labelledby={`toggle-label-${label.replace(/\s+/g, '-')}`}
+      aria-describedby={description ? `toggle-desc-${label.replace(/\s+/g, '-')}` : undefined}
       onClick={() => onChange(!checked)}
-      className={`relative w-9 h-5 rounded-full transition-colors ${
+      className={`relative w-9 h-5 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent focus-visible:ring-offset-1 focus-visible:ring-offset-vscode-sidebar ${
         checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
       }`}
     >
@@ -97,14 +101,21 @@ const SettingsSelect: React.FC<{
   onChange: (val: string) => void;
 }> = ({ label, description, value, options, onChange }) => (
   <div className="py-2 px-1">
-    <div className="text-[13px] text-vscode-text mb-1">{label}</div>
-    {description && <div className="text-[11px] text-vscode-textMuted mb-2">{description}</div>}
-    <div className="flex gap-1">
+    <div className="text-[13px] text-vscode-text mb-1" id={`select-label-${label.replace(/\s+/g, '-')}`}>{label}</div>
+    {description && <div className="text-[11px] text-vscode-textMuted mb-2" id={`select-desc-${label.replace(/\s+/g, '-')}`}>{description}</div>}
+    <div
+      className="flex gap-1"
+      role="radiogroup"
+      aria-labelledby={`select-label-${label.replace(/\s+/g, '-')}`}
+      aria-describedby={description ? `select-desc-${label.replace(/\s+/g, '-')}` : undefined}
+    >
       {options.map((opt) => (
         <button
           key={opt.value}
+          role="radio"
+          aria-checked={value === opt.value}
           onClick={() => onChange(opt.value)}
-          className={`px-3 py-1 text-[12px] rounded border transition-colors ${
+          className={`px-3 py-1 text-[12px] rounded border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent focus-visible:border-transparent ${
             value === opt.value
               ? 'bg-vscode-accent/20 border-vscode-accent text-vscode-accent'
               : 'bg-vscode-surface0/30 border-vscode-border text-vscode-textMuted hover:text-vscode-text hover:border-vscode-textSubtle'

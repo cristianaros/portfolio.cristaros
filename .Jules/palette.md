@@ -1,0 +1,3 @@
+## 2024-03-24 - Interactive Component Accessibility
+**Learning:** Custom interactive components like toggles (`SettingsToggle`) and segment controls (`SettingsSelect`) made from `button` elements need explicit ARIA roles (`role="switch"`, `role="group"`) and state attributes (`aria-checked`, `aria-pressed`) to be properly understood by screen readers, along with explicit `focus-visible` styles for keyboard users, since the default button role doesn't convey their actual toggle/selection state.
+**Action:** When building custom interactive components, always map their visual state to the corresponding ARIA state attributes and ensure keyboard focus is visibly distinct.

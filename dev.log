@@ -1,0 +1,17 @@
+
+> portfolio-cristian-aros@1.0.0 dev
+> astro dev
+
+09:52:30 [types] Generated 1ms
+09:52:30 [content] Syncing content
+09:52:30 [content] Synced content
+09:52:30 [vite] Re-optimizing dependencies because vite config has changed
+
+ astro  v5.18.0 ready in 617 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+09:52:30 watching for file changes...
+09:53:52 [200] / 585ms
+09:56:06 [200] / 62ms

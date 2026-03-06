@@ -105,9 +105,9 @@ export default function Terminal() {
           </span>
         </div>
         <div className="flex items-center gap-2 text-vscode-textMuted">
-          <button className="hover:text-vscode-text transition-colors text-lg leading-none">+</button>
-          <button className="hover:text-vscode-text transition-colors text-sm leading-none">⌃</button>
-          <button className="hover:text-vscode-text transition-colors text-sm leading-none">×</button>
+          <button className="hover:text-vscode-text transition-colors text-lg leading-none" aria-label="Nueva terminal" title="Nueva terminal">+</button>
+          <button className="hover:text-vscode-text transition-colors text-sm leading-none" aria-label="Maximizar panel" title="Maximizar panel">⌃</button>
+          <button className="hover:text-vscode-text transition-colors text-sm leading-none" aria-label="Cerrar terminal" title="Cerrar terminal">×</button>
         </div>
       </div>
 

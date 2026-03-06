@@ -75,6 +75,8 @@ const SettingsToggle: React.FC<{
     </div>
     <button
       onClick={() => onChange(!checked)}
+      aria-label={label}
+      aria-pressed={checked}
       className={`relative w-9 h-5 rounded-full transition-colors ${
         checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
       }`}
@@ -104,6 +106,8 @@ const SettingsSelect: React.FC<{
         <button
           key={opt.value}
           onClick={() => onChange(opt.value)}
+          aria-label={`${label} - ${opt.label}`}
+          aria-pressed={value === opt.value}
           className={`px-3 py-1 text-[12px] rounded border transition-colors ${
             value === opt.value
               ? 'bg-vscode-accent/20 border-vscode-accent text-vscode-accent'
@@ -200,6 +204,8 @@ export default function SettingsPanel() {
               </span>
               <button
                 onClick={() => setIsOpen(false)}
+                aria-label="Cerrar configuración"
+                title="Cerrar configuración"
                 className="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

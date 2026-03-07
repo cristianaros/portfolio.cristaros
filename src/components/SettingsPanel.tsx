@@ -78,6 +78,9 @@ const SettingsToggle: React.FC<{
       className={`relative w-9 h-5 rounded-full transition-colors ${
         checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
       }`}
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
     >
       <span
         className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
@@ -109,6 +112,7 @@ const SettingsSelect: React.FC<{
               ? 'bg-vscode-accent/20 border-vscode-accent text-vscode-accent'
               : 'bg-vscode-surface0/30 border-vscode-border text-vscode-textMuted hover:text-vscode-text hover:border-vscode-textSubtle'
           }`}
+          aria-pressed={value === opt.value}
         >
           {opt.label}
         </button>
@@ -164,6 +168,8 @@ export default function SettingsPanel() {
             : 'text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30'
         }`}
         title="Configuración"
+        aria-label="Configuración"
+        aria-expanded={isOpen}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -201,6 +207,7 @@ export default function SettingsPanel() {
               <button
                 onClick={() => setIsOpen(false)}
                 className="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors"
+                aria-label="Cerrar configuración"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />

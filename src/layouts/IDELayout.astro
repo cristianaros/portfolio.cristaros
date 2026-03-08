@@ -49,7 +49,9 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
       <button
         id="mobile-menu-btn"
         class="w-8 h-8 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text transition-colors"
-        title="Menú">
+        title="Menú"
+        aria-label="Menú"
+        aria-expanded="false">
         <svg
           class="w-5 h-5"
           fill="none"
@@ -86,7 +88,8 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           >
           <button
             id="mobile-drawer-close"
-            class="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors">
+            class="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors"
+            aria-label="Cerrar explorador">
             <svg
               class="w-4 h-4"
               fill="none"
@@ -622,6 +625,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         function openMobileDrawer() {
           if (!overlay || !drawer) return;
           overlay.classList.remove("hidden");
+          if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
           requestAnimationFrame(() => {
             overlay.style.opacity = "1";
             drawer.style.transform = "translateX(0)";
@@ -632,6 +636,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           if (!overlay || !drawer) return;
           overlay.style.opacity = "0";
           drawer.style.transform = "translateX(-100%)";
+          if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
           setTimeout(() => overlay.classList.add("hidden"), 250);
         }
 

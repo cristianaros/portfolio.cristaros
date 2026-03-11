@@ -1,17 +1,17 @@
-import React, { useRef, useEffect, useState, type ReactNode } from 'react';
+import React, { useRef, useEffect, useState, type ReactNode } from "react";
 
 interface AnimatedContentProps {
   children: ReactNode;
   className?: string;
-  direction?: 'up' | 'down' | 'left' | 'right';
+  direction?: "up" | "down" | "left" | "right";
   delay?: number;
   distance?: number;
 }
 
 export const AnimatedContent: React.FC<AnimatedContentProps> = ({
   children,
-  className = '',
-  direction = 'up',
+  className = "",
+  direction = "up",
   delay = 0,
   distance = 30,
 }) => {
@@ -26,7 +26,7 @@ export const AnimatedContent: React.FC<AnimatedContentProps> = ({
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (ref.current) observer.observe(ref.current);
@@ -46,7 +46,7 @@ export const AnimatedContent: React.FC<AnimatedContentProps> = ({
       className={className}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translate(0, 0)' : transforms[direction],
+        transform: isVisible ? "translate(0, 0)" : transforms[direction],
         transition: `opacity 0.6s ease-out ${delay}ms, transform 0.6s ease-out ${delay}ms`,
       }}
     >
@@ -62,7 +62,12 @@ interface CountUpProps {
   className?: string;
 }
 
-export const CountUp: React.FC<CountUpProps> = ({ end, duration = 2000, suffix = '', className = '' }) => {
+export const CountUp: React.FC<CountUpProps> = ({
+  end,
+  duration = 2000,
+  suffix = "",
+  className = "",
+}) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const hasStarted = useRef(false);
@@ -84,14 +89,19 @@ export const CountUp: React.FC<CountUpProps> = ({ end, duration = 2000, suffix =
           observer.disconnect();
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [end, duration]);
 
-  return <span ref={ref} className={className}>{count}{suffix}</span>;
+  return (
+    <span ref={ref} className={className}>
+      {count}
+      {suffix}
+    </span>
+  );
 };
 
 interface MagnetProps {
@@ -100,7 +110,11 @@ interface MagnetProps {
   strength?: number;
 }
 
-export const Magnet: React.FC<MagnetProps> = ({ children, className = '', strength = 0.3 }) => {
+export const Magnet: React.FC<MagnetProps> = ({
+  children,
+  className = "",
+  strength = 0.3,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -113,7 +127,7 @@ export const Magnet: React.FC<MagnetProps> = ({ children, className = '', streng
 
   const handleMouseLeave = () => {
     if (ref.current) {
-      ref.current.style.transform = 'translate(0, 0)';
+      ref.current.style.transform = "translate(0, 0)";
     }
   };
 
@@ -135,7 +149,11 @@ interface TiltCardProps {
   maxTilt?: number;
 }
 
-export const TiltCard: React.FC<TiltCardProps> = ({ children, className = '', maxTilt = 10 }) => {
+export const TiltCard: React.FC<TiltCardProps> = ({
+  children,
+  className = "",
+  maxTilt = 10,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -148,7 +166,8 @@ export const TiltCard: React.FC<TiltCardProps> = ({ children, className = '', ma
 
   const handleMouseLeave = () => {
     if (ref.current) {
-      ref.current.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+      ref.current.style.transform =
+        "perspective(1000px) rotateY(0deg) rotateX(0deg)";
     }
   };
 

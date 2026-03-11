@@ -1,0 +1,4 @@
+## 2024-05-24 - Content-Security-Policy in Astro/React Environments
+**Vulnerability:** Missing Content-Security-Policy (CSP) allowed potentially untrusted scripts/styles execution, posing an XSS risk.
+**Learning:** Due to the Astro/React architecture heavily utilizing inline scripts and styles, a strict CSP blocking `'unsafe-inline'` breaks the UI.
+**Prevention:** Always implement a baseline CSP using `'unsafe-inline'` for `script-src` and `style-src` as a balanced security measure for Astro/React sites deployed on Vercel, adding specific external sources (like `https://fonts.googleapis.com`) as needed, along with complementary security headers like Permissions-Policy.

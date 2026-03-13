@@ -1,0 +1,3 @@
+## 2024-05-24 - Spanish ARIA Labels for IDE Controls
+**Learning:** For a portfolio simulating an IDE, native English labels for UI chrome (like "Toggle Panel") can break immersion when the rest of the application and the user's preference is in Spanish. Additionally, these icon-only controls often lack visible focus states, making them inaccessible for keyboard users.
+**Action:** Always verify that decorative icon-only buttons have localized `aria-label` and `title` attributes (in this case, Spanish) and apply consistent focus indicators (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm`) using the existing design system.

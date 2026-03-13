@@ -1,0 +1,3 @@
+## 2025-02-23 - Accessibility & Localization on Icon-Only Buttons
+**Learning:** Icon-only buttons often lack `aria-label` and `title` attributes, making them inaccessible to screen readers and difficult to understand without hover tooltips. Additionally, in localized applications (like Spanish), these attributes must be translated to ensure a cohesive user experience. Keyboard navigation via `focus-visible` is crucial for interactive elements.
+**Action:** When reviewing icon-only buttons, always ensure `aria-label` and `title` attributes are present, translated appropriately to match the app's primary language, and that keyboard focus states (`focus-visible`) are clearly defined using the app's design system tokens.

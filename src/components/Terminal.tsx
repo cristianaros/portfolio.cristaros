@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface TerminalLine {
   prompt?: string;
@@ -11,30 +11,30 @@ interface TerminalLine {
 
 const lines: TerminalLine[] = [
   {
-    prompt: '~/portfolio',
-    command: 'git checkout ',
-    highlight: 'feature/nuevo-diseño',
+    prompt: "~/portfolio",
+    command: "git checkout ",
+    highlight: "feature/nuevo-diseño",
   },
   {
     output: "Cambiado a rama 'feature/nuevo-diseño'",
   },
   {
-    prompt: '~/portfolio',
-    command: 'npm run dev',
+    prompt: "~/portfolio",
+    command: "npm run dev",
   },
   {
     success: true,
-    output: 'Listo en 24ms',
+    output: "Listo en 24ms",
   },
   {
-    output: 'LOCAL:',
-    link: 'http://localhost:4321/',
+    output: "LOCAL:",
+    link: "http://localhost:4321/",
   },
 ];
 
 function hasAnimated(): boolean {
   try {
-    return sessionStorage.getItem('terminal-animated') === 'true';
+    return sessionStorage.getItem("terminal-animated") === "true";
   } catch {
     return false;
   }
@@ -42,16 +42,18 @@ function hasAnimated(): boolean {
 
 function markAnimated() {
   try {
-    sessionStorage.setItem('terminal-animated', 'true');
+    sessionStorage.setItem("terminal-animated", "true");
   } catch {}
 }
 
 export default function Terminal() {
   const alreadyAnimated = hasAnimated();
-  const [visibleLines, setVisibleLines] = useState(alreadyAnimated ? lines.length : 0);
+  const [visibleLines, setVisibleLines] = useState(
+    alreadyAnimated ? lines.length : 0,
+  );
   const [isVisible, setIsVisible] = useState(() => {
     try {
-      const stored = localStorage.getItem('portfolio-settings');
+      const stored = localStorage.getItem("portfolio-settings");
       if (stored) {
         const settings = JSON.parse(stored);
         return settings.terminalVisible !== false;
@@ -65,7 +67,7 @@ export default function Terminal() {
     if (alreadyAnimated) return;
 
     const interval = setInterval(() => {
-      setVisibleLines(prev => {
+      setVisibleLines((prev) => {
         if (prev >= lines.length) {
           clearInterval(interval);
           markAnimated();
@@ -82,12 +84,12 @@ export default function Terminal() {
   useEffect(() => {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail;
-      if (detail && typeof detail.terminalVisible === 'boolean') {
+      if (detail && typeof detail.terminalVisible === "boolean") {
         setIsVisible(detail.terminalVisible);
       }
     };
-    window.addEventListener('portfolio-settings', handler);
-    return () => window.removeEventListener('portfolio-settings', handler);
+    window.addEventListener("portfolio-settings", handler);
+    return () => window.removeEventListener("portfolio-settings", handler);
   }, []);
 
   if (!isVisible) return null;
@@ -98,16 +100,44 @@ export default function Terminal() {
       <div className="flex items-center justify-between px-4 py-1.5 border-b border-vscode-border bg-vscode-tabs">
         <div className="flex items-center gap-3">
           <span className="text-[11px] tracking-wider uppercase text-vscode-textMuted font-semibold flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
             </svg>
             Terminal
           </span>
         </div>
         <div className="flex items-center gap-2 text-vscode-textMuted">
-          <button className="hover:text-vscode-text transition-colors text-lg leading-none">+</button>
-          <button className="hover:text-vscode-text transition-colors text-sm leading-none">⌃</button>
-          <button className="hover:text-vscode-text transition-colors text-sm leading-none">×</button>
+          <button
+            className="hover:text-vscode-text transition-colors text-lg leading-none rounded-sm focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+            title="Nueva terminal"
+            aria-label="Nueva terminal"
+          >
+            +
+          </button>
+          <button
+            className="hover:text-vscode-text transition-colors text-sm leading-none rounded-sm focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+            title="Maximizar panel"
+            aria-label="Maximizar panel"
+          >
+            ⌃
+          </button>
+          <button
+            className="hover:text-vscode-text transition-colors text-sm leading-none rounded-sm focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+            title="Cerrar panel"
+            aria-label="Cerrar panel"
+          >
+            ×
+          </button>
         </div>
       </div>
 
@@ -116,8 +146,10 @@ export default function Terminal() {
         {lines.slice(0, visibleLines).map((line, idx) => (
           <div
             key={idx}
-            className={alreadyAnimated ? '' : 'animate-fade-in'}
-            style={alreadyAnimated ? undefined : { animationDelay: `${idx * 100}ms` }}
+            className={alreadyAnimated ? "" : "animate-fade-in"}
+            style={
+              alreadyAnimated ? undefined : { animationDelay: `${idx * 100}ms` }
+            }
           >
             {line.prompt ? (
               <div className="flex items-center gap-2 flex-wrap">
@@ -125,7 +157,9 @@ export default function Terminal() {
                 <span className="text-vscode-green">{line.prompt}</span>
                 <span className="text-vscode-text">{line.command}</span>
                 {line.highlight && (
-                  <span className="text-vscode-peach font-semibold">{line.highlight}</span>
+                  <span className="text-vscode-peach font-semibold">
+                    {line.highlight}
+                  </span>
                 )}
               </div>
             ) : line.success ? (

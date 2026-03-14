@@ -1,0 +1,3 @@
+## 2024-05-18 - IDE Chrome Control Buttons Accessibility
+**Learning:** Mock UI elements (like macOS traffic light buttons or VSCode panel controls) that are purely visual icons often miss critical accessibility features. Even if they mimic familiar OS/IDE patterns visually, screen readers and keyboard users cannot interact with or understand them without explicit ARIA labels, semantic roles/titles, and clear focus states.
+**Action:** Always ensure that decorative/mock UI controls which are interactive have descriptive `aria-label` or `title` attributes and visible keyboard focus styles (`focus-visible:ring`), particularly matching the surrounding theme's accent color.

@@ -1,0 +1,3 @@
+## 2024-03-12 - Decorative UI Elements Require A11y
+**Learning:** Even "decorative" UI elements (like a simulated VS Code terminal's control buttons that might not be fully functional) can cause confusion for screen reader and keyboard users if they lack proper ARIA labels and focus states, appearing as mystery interactive elements.
+**Action:** Always add descriptive `aria-label` and `title` attributes, along with standard keyboard focus indicators (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none`) to icon-only buttons, regardless of their primary functional role.

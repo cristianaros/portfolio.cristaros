@@ -1,0 +1,3 @@
+## 2024-03-10 - Terminal window controls state management
+**Learning:** The terminal visibility state is managed via a CustomEvent named `portfolio-settings` which syncs state across the app. Raw unstyled buttons without `aria-label` or focus styles are a common anti-pattern for internal widget controls.
+**Action:** When adding window controls or toggle widgets in this design system, always implement `aria-label`, `title`, and use `focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none` for keyboard navigation, and ensure any visibility toggles dispatch the `portfolio-settings` CustomEvent to sync correctly.

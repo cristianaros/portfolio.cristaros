@@ -1,0 +1,3 @@
+## 2026-03-16 - IDE Action Buttons Accessibility
+**Learning:** Icon-only buttons in IDE-styled components (like the terminal header's +, ⌃, ×) frequently lack `aria-label` and `title` attributes, making them inaccessible to screen readers and unclear to keyboard users without proper focus indicators.
+**Action:** When creating or reviewing IDE-styled interfaces, explicitly verify that all decorative/icon-only action buttons include descriptive `aria-label` and `title` attributes in the appropriate language (e.g., Spanish for this repo), and ensure they implement clear `focus-visible` styling (like `focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm`).

@@ -1,0 +1,3 @@
+## 2024-05-18 - IDE Theme Decorative Components Need Accessibility Too
+**Learning:** In highly customized, simulation-style interfaces (like a VS Code theme), structural "chrome" elements (e.g., terminal window controls `+`, `⌃`, `×`) are often built purely visually. Screen readers completely miss their purpose, and keyboard users can't see when they have focus.
+**Action:** When working on UI components that mimic complex desktop applications, systematically audit the "window controls" and icon-only buttons. Add descriptive `aria-label`s, `title` attributes for tooltips, and ensure they have visible focus indicators (`focus-visible:ring-1 ...`) to make the simulated environment accessible to all.

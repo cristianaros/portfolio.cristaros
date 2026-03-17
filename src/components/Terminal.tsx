@@ -105,9 +105,28 @@ export default function Terminal() {
           </span>
         </div>
         <div className="flex items-center gap-2 text-vscode-textMuted">
-          <button className="hover:text-vscode-text transition-colors text-lg leading-none">+</button>
-          <button className="hover:text-vscode-text transition-colors text-sm leading-none">⌃</button>
-          <button className="hover:text-vscode-text transition-colors text-sm leading-none">×</button>
+          <button
+            className="hover:text-vscode-text transition-colors text-lg leading-none focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm px-1"
+            title="Nueva terminal"
+            aria-label="Nueva terminal"
+          >
+            +
+          </button>
+          <button
+            className="hover:text-vscode-text transition-colors text-sm leading-none focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm px-1"
+            title="Maximizar panel"
+            aria-label="Maximizar panel"
+          >
+            ⌃
+          </button>
+          <button
+            className="hover:text-vscode-text transition-colors text-sm leading-none focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm px-1"
+            title="Cerrar panel"
+            aria-label="Cerrar panel"
+            onClick={() => setIsVisible(false)}
+          >
+            ×
+          </button>
         </div>
       </div>
 

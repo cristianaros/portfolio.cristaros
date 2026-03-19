@@ -1,0 +1,3 @@
+## 2026-05-15 - Decorative UI elements missing ARIA labels
+**Learning:** Even decorative or mock UI elements (like a simulated terminal window controls) need proper ARIA labels because screen readers will still focus and read them, causing confusion if they only contain symbols like "+", "⌃", or "×".
+**Action:** Always add `aria-label`, `title` and keyboard focus indicators (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm`) to icon-only buttons, even in simulated or decorative interfaces.

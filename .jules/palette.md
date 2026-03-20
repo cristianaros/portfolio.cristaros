@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessibility and State in IDE-like UIs
+**Learning:** Icon-only utility buttons in developer-focused interfaces (like terminal window controls) are often overlooked for basic accessibility (ARIA labels, keyboard focus), and making their interactions update global state (like hiding a panel syncing with settings) greatly enhances the perceived quality and functionality of the UI.
+**Action:** Always verify that every icon-only button has an appropriate `aria-label` and `title` (matching the app's language, e.g., Spanish) and ensure keyboard focus states (`focus-visible:ring-1 ...`) are present. For UI layout toggles, hook them into the global layout state rather than keeping state local to the component.

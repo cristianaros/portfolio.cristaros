@@ -1,0 +1,3 @@
+## 2024-05-20 - Inconsistent Icon-Only Button Accessibility Pattern
+**Learning:** Icon-only and character-only buttons across the app's components (like Terminal controls and Snake game buttons) frequently lack `aria-label`/`title` attributes and keyboard focus indicators, making them inaccessible to screen readers and keyboard users.
+**Action:** When auditing or adding new components, specifically check for icon-only buttons to ensure they include descriptive `aria-label` attributes in Spanish, tooltips (`title`), and the standard VS Code focus styling (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm`).

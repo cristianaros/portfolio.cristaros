@@ -1,0 +1,3 @@
+## 2024-03-24 - Missing ARIA Labels and Focus Indicators on IDE Window Controls
+**Learning:** Icon-only UI elements intended to mimic IDE window controls (like terminal toggles) are frequently implemented without accessible names (`aria-label`) or keyboard focus indicators, leading to poor screen reader experiences and keyboard navigation dead-ends.
+**Action:** Always ensure decorative "window control" buttons have descriptive `aria-label`s, `title`s (in Spanish), appropriate minimum touch targets, and `focus-visible` styling using the established pattern (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none`).

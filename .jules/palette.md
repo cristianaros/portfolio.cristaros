@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessibility of Text-based IDE Icons
+**Learning:** The app frequently uses plain text characters (`+`, `⌃`, `×`, `···`, `▲`) as UI icons to mimic the VS Code editor aesthetic. Sighted users might guess their function, but they are inaccessible to screen readers, lack tooltips, and lack visible keyboard focus states due to their minimal default styling.
+**Action:** Always add explicit Spanish `aria-label` attributes, `title` tooltips, and `focus-visible` outline classes (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm px-1`) to text-based or icon-only buttons.

@@ -139,6 +139,18 @@ export default function SettingsPanel() {
     return () => window.removeEventListener('toggle-settings', handler);
   }, []);
 
+  // Sync settings when changed from outside (e.g., terminal close button)
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail && typeof detail.terminalVisible === 'boolean') {
+        setSettings((prev) => ({ ...prev, terminalVisible: detail.terminalVisible }));
+      }
+    };
+    window.addEventListener('portfolio-settings', handler);
+    return () => window.removeEventListener('portfolio-settings', handler);
+  }, []);
+
   const updateSetting = useCallback(<K extends keyof Settings>(key: K, value: Settings[K]) => {
     setSettings((prev) => {
       const next = { ...prev, [key]: value };

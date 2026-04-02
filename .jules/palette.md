@@ -1,0 +1,3 @@
+## 2025-02-18 - Tooltips en botones decorativos de ventana
+**Learning:** En interfaces que simulan sistemas operativos o IDEs, los controles de ventana ("+", "⌃", "×") a menudo se asumen universales, pero requieren `aria-label` y `title` para ser comprensibles en lectores de pantalla y tener tooltips para usuarios con ratón. Los atajos de estilo "leading-none" pueden necesitar "px-1" extra al agregar "focus-visible:ring" para evitar cortar el indicador de foco.
+**Action:** Al implementar interfaces "mock" (como VS Code o ventanas de macOS), asegurar que cada botón de control incluya atributos ARIA y un indicador de foco con suficiente padding, incluso si sus funciones son puramente decorativas o locales.

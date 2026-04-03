@@ -1,0 +1,3 @@
+## 2024-05-24 - Add ARIA Labels and Focus Indicators to Terminal Controls
+**Learning:** Terminal control buttons lacked descriptive ARIA labels and keyboard focus indicators, making them inaccessible to screen readers and difficult to use via keyboard navigation.
+**Action:** Always add `aria-label`, `title`, and `focus-visible` classes to icon-only interactive elements, ensuring proper focus rings and descriptive labels for accessibility.

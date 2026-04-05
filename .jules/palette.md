@@ -1,0 +1,3 @@
+## 2025-04-05 - Accesibilidad en botones decorativos de la terminal
+**Learning:** Decorative or non-functional buttons in mock UI components (like the simulated VS Code terminal) are still placed in the accessibility tree and tab order because of the `<button>` tag. Screen readers will announce them as empty or read their generic symbols without context.
+**Action:** Always provide `aria-label` and `title` (in the app's primary language, Spanish) to icon-only buttons, even in decorative mockups, and ensure they have visible focus states (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm px-1`) for keyboard users.

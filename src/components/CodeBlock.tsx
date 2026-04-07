@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
 interface LineProps {
   number: number;
@@ -13,22 +13,28 @@ const Line: React.FC<LineProps> = ({ number, children }) => (
 );
 
 const EmptyLine: React.FC<{ number: number }> = ({ number }) => (
-  <Line number={number}><span>&nbsp;</span></Line>
+  <Line number={number}>
+    <span>&nbsp;</span>
+  </Line>
 );
 
-const TechBadge: React.FC<{ icon: string; name: string; color: string }> = ({ icon, name, color }) => {
+const TechBadge: React.FC<{ icon: string; name: string; color: string }> = ({
+  icon,
+  name,
+  color,
+}) => {
   const colorMap: Record<string, string> = {
-    blue: 'badge-blue',
-    green: 'badge-green',
-    pink: 'badge-pink',
-    yellow: 'badge-yellow',
-    mauve: 'badge-mauve',
-    peach: 'badge-peach',
-    teal: 'badge-teal',
+    blue: "badge-blue",
+    green: "badge-green",
+    pink: "badge-pink",
+    yellow: "badge-yellow",
+    mauve: "badge-mauve",
+    peach: "badge-peach",
+    teal: "badge-teal",
   };
 
   return (
-    <span className={`badge ${colorMap[color] || 'badge-blue'}`}>
+    <span className={`badge ${colorMap[color] || "badge-blue"}`}>
       <span>{icon}</span>
       {name}
     </span>
@@ -36,7 +42,11 @@ const TechBadge: React.FC<{ icon: string; name: string; color: string }> = ({ ic
 };
 
 function hasAnimated(): boolean {
-  try { return sessionStorage.getItem('codeblock-animated') === 'true'; } catch { return false; }
+  try {
+    return sessionStorage.getItem("codeblock-animated") === "true";
+  } catch {
+    return false;
+  }
 }
 
 export default function CodeBlock() {
@@ -45,18 +55,20 @@ export default function CodeBlock() {
 
   useEffect(() => {
     if (!alreadyAnimated) {
-      try { sessionStorage.setItem('codeblock-animated', 'true'); } catch {}
+      try {
+        sessionStorage.setItem("codeblock-animated", "true");
+      } catch {}
     }
   }, []);
 
   return (
-    <div className={alreadyAnimated ? '' : 'animate-fade-in'}>
+    <div className={alreadyAnimated ? "" : "animate-fade-in"}>
       {/* const stackTecnologico = { */}
       <Line number={startLine}>
         <span>
           <span className="syntax-keyword">const </span>
           <span className="syntax-variable">stackTecnologico</span>
-          <span className="syntax-punctuation"> = {'{'}</span>
+          <span className="syntax-punctuation"> = {"{"}</span>
         </span>
       </Line>
 
@@ -70,7 +82,7 @@ export default function CodeBlock() {
           <TechBadge icon="🚀" name="Astro" color="peach" />
           <TechBadge icon="🎨" name="Tailwind" color="teal" />
           <TechBadge icon="📘" name="TypeScript" color="blue" />
-          <span className="syntax-comment">{'// Componentes robustos'}</span>
+          <span className="syntax-comment">{"// Componentes robustos"}</span>
         </div>
       </Line>
 
@@ -115,7 +127,7 @@ export default function CodeBlock() {
 
       {/* }; */}
       <Line number={startLine + 10}>
-        <span className="syntax-punctuation">{'};'}</span>
+        <span className="syntax-punctuation">{"};"}</span>
       </Line>
 
       <EmptyLine number={startLine + 11} />

@@ -1,0 +1,3 @@
+## 2025-02-23 - Accesibilidad en elementos simulados de UI
+**Learning:** Los elementos de UI simulados (como los controles de ventana en el panel de terminal) a menudo carecen de accesibilidad porque se tratan como decorativos, pero los lectores de pantalla aún los interactúan como botones. Además, los elementos con restricciones de diseño ajustadas (como `leading-none`) requieren padding adicional (`px-1`) para evitar que el anillo de enfoque (`focus-visible:ring`) se recorte visualmente.
+**Action:** Siempre agregar atributos `aria-label` y `title` a botones de solo icono, incluso si la funcionalidad es puramente decorativa o simulada, y asegurar que los estilos de enfoque tengan el padding adecuado para no ser recortados.

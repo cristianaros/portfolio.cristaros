@@ -1,3 +1,7 @@
 ## 2024-04-09 - Accesibilidad en componentes decorativos de terminal
 **Learning:** Los botones decorativos que simulan la interfaz del IDE (como los controles de la terminal) utilizan etiquetas `<button>` reales pero carecían de atributos de accesibilidad, lo que los convierte en botones interactivos inaccesibles para lectores de pantalla, además de presentar recortes visuales al recibir foco debido a la clase `leading-none` sin espaciado adicional.
 **Action:** Al implementar componentes que simulan elementos nativos del sistema (UI decorativa), asegurar que cada `<button>` tenga `aria-label` y `title` descriptivos en español, junto con indicadores de foco (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none`) y un padding compensatorio (`px-1`) para evitar el recorte del anillo de foco.
+
+## 2024-04-11 - Accesibilidad en controles de SnakeInline
+**Learning:** Los controles en pantalla de un juego integrado (`SnakeInline.tsx`) pueden parecer obvios visualmente, pero al estar construidos con etiquetas `<button>` requieren forzosamente etiquetas descriptivas y estilos de foco visibles para ser utilizables por teclados y lectores de pantalla.
+**Action:** Al crear controles tipo "Game Boy" o crucetas direccionales, siempre proveer `aria-label` y `title` (ej. "Mover arriba", "Iniciar juego") y habilitar `focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none`.

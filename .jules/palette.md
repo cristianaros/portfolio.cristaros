@@ -1,3 +1,7 @@
 ## 2024-04-09 - Accesibilidad en componentes decorativos de terminal
 **Learning:** Los botones decorativos que simulan la interfaz del IDE (como los controles de la terminal) utilizan etiquetas `<button>` reales pero carecían de atributos de accesibilidad, lo que los convierte en botones interactivos inaccesibles para lectores de pantalla, además de presentar recortes visuales al recibir foco debido a la clase `leading-none` sin espaciado adicional.
 **Action:** Al implementar componentes que simulan elementos nativos del sistema (UI decorativa), asegurar que cada `<button>` tenga `aria-label` y `title` descriptivos en español, junto con indicadores de foco (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none`) y un padding compensatorio (`px-1`) para evitar el recorte del anillo de foco.
+
+## 2024-05-18 - Accesibilidad en controles de juego
+**Learning:** Los controles de juego (como el D-pad de Snake) que utilizan eventos `onMouseDown` para obtener respuestas rápidas son inaccesibles mediante la navegación por teclado (Enter/Espacio) si no cuentan con manejadores `onClick`, lo que impide que los usuarios de lectores de pantalla o solo teclado puedan jugar.
+**Action:** Siempre emparejar manejadores `onMouseDown` con equivalentes `onClick` en controles interactivos de UI/juego para asegurar soporte dual para puntero y accesibilidad por teclado, añadiendo también atributos ARIA y estilos de `focus-visible`.

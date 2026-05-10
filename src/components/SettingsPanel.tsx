@@ -75,7 +75,7 @@ const SettingsToggle: React.FC<{
     </div>
     <button
       onClick={() => onChange(!checked)}
-      className={`relative w-9 h-5 rounded-full transition-colors ${
+      className={`relative w-9 h-5 rounded-full transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none ${
         checked ? 'bg-vscode-accent' : 'bg-vscode-surface1'
       }`}
       role="switch"
@@ -107,7 +107,7 @@ const SettingsSelect: React.FC<{
         <button
           key={opt.value}
           onClick={() => onChange(opt.value)}
-          className={`px-3 py-1 text-[12px] rounded border transition-colors ${
+          className={`px-3 py-1 text-[12px] rounded border transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none ${
             value === opt.value
               ? 'bg-vscode-accent/20 border-vscode-accent text-vscode-accent'
               : 'bg-vscode-surface0/30 border-vscode-border text-vscode-textMuted hover:text-vscode-text hover:border-vscode-textSubtle'
@@ -162,7 +162,7 @@ export default function SettingsPanel() {
       {/* Gear Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-10 h-10 flex items-center justify-center transition-colors ${
+        className={`w-10 h-10 flex items-center justify-center transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none ${
           isOpen
             ? 'text-vscode-text bg-vscode-surface0/30'
             : 'text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30'
@@ -206,7 +206,7 @@ export default function SettingsPanel() {
               </span>
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors"
+                className="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
                 aria-label="Cerrar configuración"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

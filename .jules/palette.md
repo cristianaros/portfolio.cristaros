@@ -1,3 +1,7 @@
 ## 2024-04-09 - Accesibilidad en componentes decorativos de terminal
 **Learning:** Los botones decorativos que simulan la interfaz del IDE (como los controles de la terminal) utilizan etiquetas `<button>` reales pero carecían de atributos de accesibilidad, lo que los convierte en botones interactivos inaccesibles para lectores de pantalla, además de presentar recortes visuales al recibir foco debido a la clase `leading-none` sin espaciado adicional.
 **Action:** Al implementar componentes que simulan elementos nativos del sistema (UI decorativa), asegurar que cada `<button>` tenga `aria-label` y `title` descriptivos en español, junto con indicadores de foco (`focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none`) y un padding compensatorio (`px-1`) para evitar el recorte del anillo de foco.
+
+## 2024-04-10 - Accesibilidad y traducción en controles de layout
+**Learning:** Los controles de layout (como los toggles del panel inferior y lateral en la cabecera) carecían de estilos `focus-visible`, y sus etiquetas estaban en inglés (e.g. "Toggle Panel"), lo que afecta tanto la navegación por teclado como la localización consistente de la aplicación.
+**Action:** Asegurar que los botones estructurales del layout tengan `aria-label` y `title` traducidos al español, e incorporen indicadores de foco usando `focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none rounded-sm`.

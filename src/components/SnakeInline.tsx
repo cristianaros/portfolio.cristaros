@@ -277,29 +277,41 @@ export default function SnakeInline() {
           <div className="flex gap-1">
             <div className="w-10 h-10" />
             <button
+              onClick={() => changeDir('UP')}
               onMouseDown={() => changeDir('UP')}
-              className="w-10 h-10 rounded-t-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              className="w-10 h-10 rounded-t-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Mover arriba"
+              title="Mover arriba"
             >▲</button>
             <div className="w-10 h-10" />
           </div>
           <div className="flex gap-1">
             <button
+              onClick={() => changeDir('LEFT')}
               onMouseDown={() => changeDir('LEFT')}
-              className="w-10 h-10 rounded-l-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              className="w-10 h-10 rounded-l-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Mover izquierda"
+              title="Mover izquierda"
             >◄</button>
             <div className="w-10 h-10 rounded bg-[#313244] flex items-center justify-center">
               <div className="w-3 h-3 rounded-full bg-[#45475a]" />
             </div>
             <button
+              onClick={() => changeDir('RIGHT')}
               onMouseDown={() => changeDir('RIGHT')}
-              className="w-10 h-10 rounded-r-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              className="w-10 h-10 rounded-r-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Mover derecha"
+              title="Mover derecha"
             >►</button>
           </div>
           <div className="flex gap-1">
             <div className="w-10 h-10" />
             <button
+              onClick={() => changeDir('DOWN')}
               onMouseDown={() => changeDir('DOWN')}
-              className="w-10 h-10 rounded-b-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              className="w-10 h-10 rounded-b-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Mover abajo"
+              title="Mover abajo"
             >▼</button>
             <div className="w-10 h-10" />
           </div>
@@ -309,10 +321,14 @@ export default function SnakeInline() {
         <div className="flex justify-center gap-8 mt-3">
           <button
             onClick={startGame}
-            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors"
+            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+            aria-label="Iniciar juego"
+            title="Iniciar juego"
           >A</button>
           <button
-            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors"
+            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+            aria-label="Botón B (Sin acción)"
+            title="Botón B (Sin acción)"
           >B</button>
         </div>
 

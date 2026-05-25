@@ -115,7 +115,7 @@ export default function ProjectGallery() {
           <button
             key={cat}
             onClick={() => setFilter(cat)}
-            className={`px-3 py-1.5 text-[12px] font-medium rounded-md border transition-all duration-200 ${
+            className={`px-3 py-1.5 text-[12px] font-medium rounded-md border transition-all duration-200 focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none ${
               filter === cat
                 ? 'bg-vscode-accent/20 text-vscode-accent border-vscode-accent/40'
                 : 'bg-transparent text-vscode-textMuted border-vscode-border hover:border-vscode-textMuted hover:text-vscode-text'

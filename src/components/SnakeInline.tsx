@@ -278,28 +278,40 @@ export default function SnakeInline() {
             <div className="w-10 h-10" />
             <button
               onMouseDown={() => changeDir('UP')}
-              className="w-10 h-10 rounded-t-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              onClick={() => changeDir('UP')}
+              className="w-10 h-10 rounded-t-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Arriba"
+              title="Arriba"
             >▲</button>
             <div className="w-10 h-10" />
           </div>
           <div className="flex gap-1">
             <button
               onMouseDown={() => changeDir('LEFT')}
-              className="w-10 h-10 rounded-l-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              onClick={() => changeDir('LEFT')}
+              className="w-10 h-10 rounded-l-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Izquierda"
+              title="Izquierda"
             >◄</button>
             <div className="w-10 h-10 rounded bg-[#313244] flex items-center justify-center">
               <div className="w-3 h-3 rounded-full bg-[#45475a]" />
             </div>
             <button
               onMouseDown={() => changeDir('RIGHT')}
-              className="w-10 h-10 rounded-r-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              onClick={() => changeDir('RIGHT')}
+              className="w-10 h-10 rounded-r-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Derecha"
+              title="Derecha"
             >►</button>
           </div>
           <div className="flex gap-1">
             <div className="w-10 h-10" />
             <button
               onMouseDown={() => changeDir('DOWN')}
-              className="w-10 h-10 rounded-b-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors"
+              onClick={() => changeDir('DOWN')}
+              className="w-10 h-10 rounded-b-lg bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[#cdd6f4] transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+              aria-label="Abajo"
+              title="Abajo"
             >▼</button>
             <div className="w-10 h-10" />
           </div>
@@ -309,10 +321,14 @@ export default function SnakeInline() {
         <div className="flex justify-center gap-8 mt-3">
           <button
             onClick={startGame}
-            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors"
+            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+            aria-label="Iniciar juego"
+            title="Iniciar juego"
           >A</button>
           <button
-            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors"
+            className="w-10 h-10 rounded-full bg-[#45475a] hover:bg-[#585b70] active:bg-[#313244] flex items-center justify-center text-[10px] text-[#cdd6f4] font-bold transition-colors focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
+            aria-label="Acción secundaria"
+            title="Acción secundaria"
           >B</button>
         </div>
 

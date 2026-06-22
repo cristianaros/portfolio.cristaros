@@ -1,9 +1,22 @@
 
-> portfolio-cristian-aros@1.0.0 preview
-> astro preview
+> portfolio-cristian-aros@1.0.0 dev /app
+> astro dev
 
+10:32:50 [types] Generated 1ms
+10:32:50 [content] Syncing content
+10:32:50 [content] Synced content
 
- astro  v5.18.0 ready in 21 ms
+ astro  v5.18.0 ready in 623 ms
 
 ┃ Local    http://localhost:4321/
 ┃ Network  use --host to expose
+
+10:32:50 watching for file changes...
+
+ update  ▶ New version of Astro available: 7.0.0
+  Run pnpm dlx @astrojs/upgrade to update
+
+10:33:07 [200] /snake 593ms
+10:33:55 [200] /snake 24ms
+10:39:11 [watch] /src/components/SnakeInline.tsx, /node_modules/.pnpm/@astrojs+tailwind@6.0.2_astro@5.18.0_@vercel+functions@2.2.13_jiti@1.21.7_rollup@4.59.0_35bdad4b0946fda6bb887a89bf2b15e1/node_modules/@astrojs/tailwind/base.css, /src/styles/global.css
+10:39:11 [watch] src/components/SnakeInline.tsx

@@ -1,9 +1,20 @@
 
-> portfolio-cristian-aros@1.0.0 preview
-> astro preview
+> portfolio-cristian-aros@1.0.0 dev /app
+> astro dev
 
+10:27:08 [types] Generated 1ms
+10:27:08 [content] Syncing content
+10:27:08 [content] Synced content
+10:27:08 [vite] Re-optimizing dependencies because vite config has changed
 
- astro  v5.18.0 ready in 21 ms
+ astro  v5.18.0 ready in 630 ms
 
 ┃ Local    http://localhost:4321/
 ┃ Network  use --host to expose
+
+10:27:08 watching for file changes...
+
+ update  ▶ New version of Astro available: 7.0.2
+  Run pnpm dlx @astrojs/upgrade to update
+
+10:28:15 [200] /snake 549ms

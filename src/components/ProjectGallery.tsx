@@ -53,7 +53,7 @@ const ProjectCard: React.FC<{ project: Project; index: number; skipAnim: boolean
         {project.demoUrl && (
           <a
             href={project.demoUrl}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-vscode-accent border border-vscode-accent/30 rounded-md hover:bg-vscode-accent/10 transition-all duration-200"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-vscode-accent border border-vscode-accent/30 rounded-md hover:bg-vscode-accent/10 transition-all duration-200 focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -66,7 +66,7 @@ const ProjectCard: React.FC<{ project: Project; index: number; skipAnim: boolean
         {project.repoUrl && (
           <a
             href={project.repoUrl}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-vscode-textSubtle border border-vscode-surface1 rounded-md hover:border-vscode-textMuted hover:text-vscode-text transition-all duration-200"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-vscode-textSubtle border border-vscode-surface1 rounded-md hover:border-vscode-textMuted hover:text-vscode-text transition-all duration-200 focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -115,7 +115,8 @@ export default function ProjectGallery() {
           <button
             key={cat}
             onClick={() => setFilter(cat)}
-            className={`px-3 py-1.5 text-[12px] font-medium rounded-md border transition-all duration-200 ${
+            aria-pressed={filter === cat}
+            className={`px-3 py-1.5 text-[12px] font-medium rounded-md border transition-all duration-200 focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none ${
               filter === cat
                 ? 'bg-vscode-accent/20 text-vscode-accent border-vscode-accent/40'
                 : 'bg-transparent text-vscode-textMuted border-vscode-border hover:border-vscode-textMuted hover:text-vscode-text'

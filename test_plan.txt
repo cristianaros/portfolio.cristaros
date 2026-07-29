@@ -1,0 +1,7 @@
+I will review the UI to improve keyboard accessibility and semantic HTML based on my findings as Palette.
+I see an opportunity to improve the category filter buttons in `ProjectGallery.tsx`. Currently they are standard buttons, but they function as stateful toggle buttons (tabs).
+According to best UX practices and ARIA standards, stateful toggle buttons should have the `aria-pressed` attribute to communicate their active state to screen readers. I also noticed that the buttons have no specific focus style besides what Tailwind might default to, so adding `focus-visible:ring-1 focus-visible:ring-vscode-accent focus-visible:outline-none` would improve keyboard accessibility.
+
+I will also modify `Terminal.tsx` to ensure the header buttons have the same `focus-visible` classes, as noted in the journal learning, and add them to the category buttons in `ProjectGallery.tsx`.
+
+Let me request a plan review for this.

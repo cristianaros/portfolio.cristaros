@@ -1,9 +1,24 @@
 
-> portfolio-cristian-aros@1.0.0 preview
-> astro preview
+> portfolio-cristian-aros@1.0.0 dev /app
+> astro dev
 
+10:14:39 [types] Generated 1ms
+10:14:39 [content] Syncing content
+10:14:39 [content] Synced content
+10:14:39 [vite] Re-optimizing dependencies because vite config has changed
 
- astro  v5.18.0 ready in 21 ms
+ astro  v5.18.0 ready in 597 ms
 
 ┃ Local    http://localhost:4321/
 ┃ Network  use --host to expose
+
+10:14:39 watching for file changes...
+
+ update  ▶ New version of Astro available: 7.1.6
+  Run pnpm dlx @astrojs/upgrade to update
+
+Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+10:16:11 [200] / 541ms
+10:17:08 [200] /proyectos 35ms

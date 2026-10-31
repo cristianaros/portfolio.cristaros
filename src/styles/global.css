@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Inter:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -14,6 +14,7 @@
   /* ===== DARK THEME (Catppuccin Mocha) ===== */
   :root,
   [data-theme="dark"] {
+    color-scheme: dark;
     --vscode-bg: 30 30 46;
     --vscode-sidebar: 24 24 37;
     --vscode-editor: 30 30 46;
@@ -24,7 +25,7 @@
     --vscode-statusbar: 24 24 37;
     --vscode-border: 49 50 68;
     --vscode-text: 205 214 244;
-    --vscode-textMuted: 108 112 134;
+    --vscode-textMuted: 147 153 178;
     --vscode-textSubtle: 166 173 200;
     --vscode-accent: 137 180 250;
     --vscode-accentAlt: 116 199 236;
@@ -38,14 +39,15 @@
     --vscode-surface0: 49 50 68;
     --vscode-surface1: 69 71 90;
     --vscode-surface2: 88 91 112;
-    --vscode-overlay0: 108 112 134;
-    --vscode-overlay1: 127 132 156;
+    --vscode-overlay0: 147 153 178;
+    --vscode-overlay1: 147 153 178;
     --vscode-terminal: 17 17 27;
-    --vscode-lineNumber: 69 71 90;
+    --vscode-lineNumber: 147 153 178;
   }
 
   /* ===== LIGHT THEME (Cuarzo / Soft White) ===== */
   [data-theme="light"] {
+    color-scheme: light;
     --vscode-bg: 250 250 250; /* #fafafa cuarzo */
     --vscode-sidebar: 244 244 245; /* #f4f4f5 */
     --vscode-editor: 250 250 250;
@@ -56,28 +58,28 @@
     --vscode-statusbar: 235 235 237;
     --vscode-border: 228 228 231; /* #e4e4e7 border */
     --vscode-text: 63 63 70; /* #3f3f46 */
-    --vscode-textMuted: 113 113 122; /* #71717a */
-    --vscode-textSubtle: 161 161 170; /* #a1a1aa */
-    --vscode-accent: 37 99 235; /* blue-600 */
-    --vscode-accentAlt: 2 132 199; /* sky-600 */
-    --vscode-green: 22 163 74; /* green-600 */
-    --vscode-yellow: 202 138 4; /* yellow-600 */
-    --vscode-pink: 219 39 119; /* pink-600 */
-    --vscode-mauve: 147 51 234; /* purple-600 */
-    --vscode-peach: 234 88 12; /* orange-600 */
-    --vscode-teal: 13 148 136; /* teal-600 */
-    --vscode-red: 220 38 38; /* red-600 */
+    --vscode-textMuted: 100 100 110; /* #64646e */
+    --vscode-textSubtle: 100 100 110; /* #64646e */
+    --vscode-accent: 29 78 216; /* blue-700 */
+    --vscode-accentAlt: 3 105 161; /* sky-700 */
+    --vscode-green: 22 101 52; /* green-800 */
+    --vscode-yellow: 133 77 14; /* yellow-800 */
+    --vscode-pink: 190 24 93; /* pink-700 */
+    --vscode-mauve: 126 34 206; /* purple-700 */
+    --vscode-peach: 154 52 18; /* orange-800 */
+    --vscode-teal: 15 118 110; /* teal-700 */
+    --vscode-red: 185 28 28; /* red-700 */
     --vscode-surface0: 228 228 231;
     --vscode-surface1: 212 212 216;
     --vscode-surface2: 161 161 170;
-    --vscode-overlay0: 113 113 122;
+    --vscode-overlay0: 100 100 110;
     --vscode-overlay1: 82 82 91;
     --vscode-terminal: 244 244 245;
-    --vscode-lineNumber: 161 161 170;
+    --vscode-lineNumber: 100 100 110;
   }
 
   html {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-family: "JetBrains Mono", monospace;
     background-color: rgb(var(--vscode-bg));
     color: rgb(var(--vscode-text));
     overflow: hidden;
@@ -90,6 +92,10 @@
   body {
     height: 100%;
     overflow: hidden;
+  }
+
+  #editor-content {
+    font-family: "JetBrains Mono", monospace;
   }
 
   ::-webkit-scrollbar {
@@ -161,7 +167,7 @@
   }
 
   .badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200;
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-colors duration-200;
   }
 
   .badge-blue {
@@ -192,5 +198,29 @@
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .line-number {
+    min-width: 2.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  #mobile-drawer-overlay,
+  #mobile-drawer {
+    transition-duration: 0.01ms !important;
   }
 }

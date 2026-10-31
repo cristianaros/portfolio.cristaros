@@ -3,18 +3,17 @@ import IDELayout from "../layouts/IDELayout.astro";
 import Hero from "../components/Hero";
 import CodeBlock from "../components/CodeBlock";
 import Terminal from "../components/Terminal";
-import ProjectGallery from "../components/ProjectGallery";
 import "../styles/global.css";
 ---
 
-<IDELayout title="portfolio_dev — README.md" activeFile="README.md">
+<IDELayout title="Cristian Aros | FullStack Developer" activeFile="README.md">
   <div class="flex flex-col h-full">
     <div class="flex-1 overflow-y-auto" id="editor-content">
       <!-- README.md  -->
-      <section id="hero-section">
+      <section id="hero-section" class="font-mono">
         <Hero client:load />
       </section>
-      <section id="code-section">
+      <section id="code-section" class="font-mono">
         <CodeBlock client:visible />
       </section>
       <div class="py-8"></div>

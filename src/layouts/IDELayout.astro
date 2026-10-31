@@ -1,26 +1,32 @@
 ---
 import ActivityBarWidgets from "../components/ActivityBarWidgets";
 import { ClientRouter } from "astro:transitions";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 interface Props {
   title?: string;
   activeFile?: string;
 }
 
-const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
+const { title = "Cristian Aros | FullStack Developer", activeFile = "README.md" } =
   Astro.props;
+const isExperience = activeFile === "experiencia.md" || activeFile === "experience.md";
+const experienceHref = activeFile === "experience.md" ? "/experience" : "/experiencia";
+const experienceLabel = activeFile === "experience.md" ? "experience.md" : "experiencia.md";
+const activeFileEn = activeFile === "proyectos.json" ? "projects.json" : activeFile;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={activeFile === "experience.md" ? "en" : "es"}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1e1e2e" />
     <meta property="og:title" content="Portfolio | Cristian Aros" />
     <meta
       property="og:description"
       content="Portfolio profesional simulando Visual Studio Code — Ingeniero Civil Informático y Desarrollador Full Stack."
+      data-en-content="Professional VS Code-inspired portfolio by Cristian Aros, a full-stack developer."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://portfolio.cristaros.com/" />
@@ -28,31 +34,107 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
     <meta
       name="description"
       content="Portfolio profesional de Cristian Aros — Ingeniero Civil Informático y Desarrollador de Software"
+      data-en-content="Cristian Aros's portfolio — computer engineering and software development"
     />
     <meta name="author" content="Cristian Aros" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <title>{title}</title>
     <ClientRouter />
     <script is:inline>
       // Prevent flash of wrong theme
       (function () {
-        const stored = localStorage.getItem("portfolio-theme");
-        if (stored) document.documentElement.setAttribute("data-theme", stored);
+        const getLocale = () => {
+          if (/^\/experience\/?$/.test(location.pathname)) return "en";
+          if (/^\/experiencia\/?$/.test(location.pathname)) return "es";
+          try {
+            const selected = localStorage.getItem("portfolio-locale");
+            if (selected === "es" || selected === "en") return selected;
+          } catch {}
+          const preferred = navigator.languages?.[0] || navigator.language || "es";
+          return preferred.toLowerCase().startsWith("en") ? "en" : "es";
+        };
+        const setLocale = () => {
+          const locale = getLocale();
+          if (/^\/(experience|experiencia)\/?$/.test(location.pathname)) {
+            try { localStorage.setItem("portfolio-locale", locale); } catch {}
+          }
+          document.documentElement.lang = locale;
+          document.documentElement.dataset.locale = locale;
+          document.querySelectorAll("[data-set-locale]").forEach((button) => {
+            button.setAttribute("aria-pressed", String(button.getAttribute("data-set-locale") === locale));
+          });
+          const controlLabels = {
+            "Explorador": "Explorer",
+            "Buscar (no disponible)": "Search (unavailable)",
+            "Cuenta (no disponible)": "Account (unavailable)",
+            "Más acciones del explorador (no disponible)": "More explorer actions (unavailable)",
+            "Panel (no disponible)": "Panel (unavailable)",
+            "Barra lateral secundaria (no disponible)": "Secondary sidebar (unavailable)",
+          };
+          if (locale === "en") {
+            document.querySelectorAll("[aria-label], [title]").forEach((element) => {
+              for (const attribute of ["aria-label", "title"]) {
+                const original = element.getAttribute(attribute);
+                if (original && controlLabels[original]) element.setAttribute(attribute, controlLabels[original]);
+              }
+            });
+          }
+          document.querySelectorAll("[data-en]").forEach((element) => {
+            if (locale === "en") element.textContent = element.getAttribute("data-en");
+          });
+          document.querySelectorAll("[data-en-href]").forEach((element) => {
+            if (locale === "en") element.setAttribute("href", element.getAttribute("data-en-href"));
+          });
+          document.querySelectorAll("[data-en-aria]").forEach((element) => {
+            if (locale === "en") element.setAttribute("aria-label", element.getAttribute("data-en-aria"));
+          });
+          document.querySelectorAll("[data-en-title]").forEach((element) => {
+            if (locale === "en") element.setAttribute("title", element.getAttribute("data-en-title"));
+          });
+          document.querySelectorAll("[data-en-content]").forEach((element) => {
+            if (locale === "en") element.setAttribute("content", element.getAttribute("data-en-content"));
+          });
+        };
+        setLocale();
+        document.addEventListener("DOMContentLoaded", setLocale, { once: true });
+        const syncThemeColor = () => {
+          const theme = document.documentElement.getAttribute("data-theme");
+          document.querySelector('meta[name="theme-color"]')?.setAttribute(
+            "content",
+            theme === "light" ? "#fafafa" : "#1e1e2e",
+          );
+        };
+        try {
+          const stored = localStorage.getItem("portfolio-theme");
+          if (stored === "light" || stored === "dark") {
+            document.documentElement.setAttribute("data-theme", stored);
+          }
+        } catch {}
+        syncThemeColor();
+        document.addEventListener("astro:after-swap", syncThemeColor);
+        document.addEventListener("astro:after-swap", setLocale);
+        document.addEventListener("astro:page-load", setLocale);
       })();
     </script>
   </head>
   <body
-    class="h-screen w-screen overflow-hidden bg-vscode-bg text-vscode-text font-mono flex flex-col">
+    class="h-screen w-screen overflow-hidden bg-vscode-bg text-vscode-text font-mono flex flex-col"
+    style="height:100vh;height:100dvh;min-height:100dvh">
     <!-- ===== MOBILE HEADER (visible only on small screens) ===== -->
-    <div
-      class="flex md:hidden items-center justify-between h-10 bg-vscode-menu border-b border-vscode-border px-3 shrink-0">
+    <header
+      class="flex md:hidden items-center justify-between h-10 bg-vscode-menu border-b border-vscode-border px-3 shrink-0"
+      style="padding-top:env(safe-area-inset-top);height:calc(2.5rem + env(safe-area-inset-top))">
       <button
         id="mobile-menu-btn"
-        class="w-8 h-8 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text transition-colors"
-        title="Menú"
+        class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent"
+        title="Menú" data-en-title="Menu"
         aria-label="Menú"
-        aria-expanded="false">
-        <svg
+        data-en-aria="Menu"
+        aria-expanded="false"
+        aria-controls="mobile-drawer">
+        <svg aria-hidden="true"
           class="w-5 h-5"
           fill="none"
           stroke="currentColor"
@@ -64,33 +146,43 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
             d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
-      <span class="text-[12px] text-vscode-textMuted truncate mx-2"
+      <span class="text-[12px] text-vscode-textMuted truncate mx-2" data-en={activeFileEn}
         >{activeFile}</span
       >
       <div class="w-8"></div>
-    </div>
+    </header>
 
     <!-- ===== MOBILE DRAWER ===== -->
     <div
       id="mobile-drawer-overlay"
       class="fixed inset-0 z-[60] bg-black/40 hidden md:hidden"
       style="opacity:0;transition:opacity 0.2s ease">
+      <button
+        type="button"
+        class="absolute inset-0 h-full w-full cursor-default"
+        aria-label="Cerrar explorador"
+        data-en-aria="Close explorer"
+        aria-hidden="true"
+        tabindex="-1"></button>
       <aside
         id="mobile-drawer"
         class="absolute left-0 top-0 bottom-0 w-64 bg-vscode-sidebar border-r border-vscode-border flex flex-col overflow-y-auto"
-        style="transform:translateX(-100%);transition:transform 0.25s ease">
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mobile-drawer-title"
+        style="transform:translateX(-100%);transition:transform 0.25s ease;overscroll-behavior:contain;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)">
         <!-- Drawer Header -->
         <div
           class="flex items-center justify-between px-4 py-3 border-b border-vscode-border">
-          <span
+          <span id="mobile-drawer-title"
             class="text-[11px] tracking-wider uppercase text-vscode-textMuted font-semibold"
-            >Explorador</span
+            data-en="Explorer">Explorador</span
           >
           <button
             id="mobile-drawer-close"
-            class="w-6 h-6 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors"
-            aria-label="Cerrar explorador">
-            <svg
+            class="w-8 h-8 flex items-center justify-center rounded hover:bg-vscode-surface0/50 text-vscode-textMuted hover:text-vscode-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent"
+            aria-label="Cerrar explorador" data-en-aria="Close explorer">
+            <svg aria-hidden="true"
               class="w-4 h-4"
               fill="none"
               stroke="currentColor"
@@ -108,7 +200,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <div class="px-3 py-2 flex flex-col text-[13px] gap-0.5">
           <div
             class="flex items-center gap-1 px-2 py-1 text-[11px] tracking-wider uppercase text-vscode-textMuted font-semibold mb-1">
-            <svg
+            <svg aria-hidden="true"
               class="w-3 h-3 transform rotate-90"
               fill="currentColor"
               viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg
@@ -120,7 +212,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           <a
             href="/"
             class={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${activeFile === "README.md" ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle hover:bg-vscode-surface0/50"}`}>
-            <svg
+            <svg aria-hidden="true"
               class="w-4 h-4 text-vscode-accent shrink-0"
               fill="currentColor"
               viewBox="0 0 24 24"
@@ -135,7 +227,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           <a
             href="/proyectos"
             class={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${activeFile === "proyectos.json" ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle hover:bg-vscode-surface0/50"}`}>
-            <svg
+            <svg aria-hidden="true"
               class="w-4 h-4 text-vscode-yellow shrink-0"
               fill="currentColor"
               viewBox="0 0 24 24"
@@ -143,25 +235,24 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
                 d="M5 3h2v2H5v5a2 2 0 01-2 2 2 2 0 012 2v5h2v2H5c-1.07-.27-2-.9-2-2v-4a2 2 0 00-2-2H0v-2h1a2 2 0 002-2V5a2 2 0 012-2m14 0a2 2 0 012 2v4a2 2 0 002 2h1v2h-1a2 2 0 00-2 2v4a2 2 0 01-2 2h-2v-2h2v-5a2 2 0 012-2 2 2 0 01-2-2V5h-2V3h2M12 15a1 1 0 110 2 1 1 0 010-2m-4 0a1 1 0 110 2 1 1 0 010-2m8 0a1 1 0 110 2 1 1 0 010-2z"
               ></path></svg
             >
-            <span>proyectos.json</span>
+            <span data-en="projects.json">proyectos.json</span>
           </a>
 
-          <!-- snake.astro -->
+          <!-- experiencia.md / experience.md -->
           <a
-            href="/snake"
-            class={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${activeFile === "snake.astro" ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle hover:bg-vscode-surface0/50"}`}>
-            <span
-              class="w-4 h-4 shrink-0 flex items-center justify-center text-[12px]"
-              >🐍</span
-            >
-            <span>snake.astro</span>
+            href={experienceHref}
+            data-en-href="/experience"
+            aria-current={isExperience ? "page" : undefined}
+            class={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${isExperience ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle hover:bg-vscode-surface0/50"}`}>
+            <svg aria-hidden="true" class="w-4 h-4 text-vscode-green shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 3h16v18H4zM8 8h8M8 12h8M8 16h5" /></svg>
+            <span data-en="experience.md">{experienceLabel}</span>
           </a>
 
           <!-- config.json -->
           <button
             id="mobile-config-json-btn"
             class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-vscode-surface0/50 transition-colors w-full text-left text-vscode-textSubtle">
-            <svg
+            <svg aria-hidden="true"
               class="w-4 h-4 text-vscode-yellow shrink-0"
               fill="currentColor"
               viewBox="0 0 24 24"
@@ -172,20 +263,38 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
             <span>config.json</span>
           </button>
         </div>
+        <div class="mt-auto border-t border-vscode-border px-4 py-3 flex items-center justify-between">
+          <span class="text-[11px] uppercase tracking-wider text-vscode-textMuted" data-en="Language">Idioma</span>
+          <div role="group" aria-label="Cambiar idioma" data-en-aria="Change language" class="flex gap-1">
+            <button type="button" data-set-locale="es" aria-label="Español" aria-pressed="false" class="h-10 w-10 rounded text-xs font-semibold text-vscode-textMuted hover:text-vscode-text aria-pressed:bg-vscode-accent/20 aria-pressed:text-vscode-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent">ES</button>
+            <button type="button" data-set-locale="en" aria-label="English" aria-pressed="false" class="h-10 w-10 rounded text-xs font-semibold text-vscode-textMuted hover:text-vscode-text aria-pressed:bg-vscode-accent/20 aria-pressed:text-vscode-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent">EN</button>
+          </div>
+        </div>
       </aside>
     </div>
+
+    <nav aria-label="Navegación rápida" data-en-aria="Quick navigation">
+      <a
+        href="#main-content"
+        class="sr-only fixed left-3 top-3 z-[100] rounded bg-vscode-accent px-4 py-2 text-sm font-semibold text-vscode-bg focus:not-sr-only focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-text">
+        <span data-en="Skip to main content">Saltar al contenido principal</span>
+      </a>
+    </nav>
 
     <!-- ===== MAIN CONTENT ===== -->
     <div class="flex flex-1 overflow-hidden">
       <!-- ===== ACTIVITY BAR (hidden on mobile) ===== -->
       <aside
+        aria-label="Barra de actividades"
+        data-en-aria="Activity bar"
         class="hidden md:flex w-12 bg-vscode-menu border-r border-vscode-border flex-col items-center py-2 gap-1 shrink-0">
         <!-- Explorer (active) -->
         <button
           class="w-10 h-10 flex items-center justify-center text-vscode-text border-l-2 border-vscode-accent rounded-none hover:bg-vscode-surface0/30 transition-colors"
           title="Explorador"
-          aria-label="Explorador">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
+          aria-label="Explorador"
+          disabled>
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
             ><path
               d="M17.5 0h-9L7 1.5V6H2.5L1 7.5v15.07L2.5 24h12.07L16 22.57V18h4.7l1.3-1.43V4.5L17.5 0zm0 2.12l2.38 2.38H17.5V2.12zm-3 20.38h-12v-15H7v9.07L8.5 18h6v4.5zm6-6h-12v-15H16V6h4.5v10.5z"
             ></path></svg
@@ -194,10 +303,11 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
 
         <!-- Search -->
         <button
-          class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors"
-          title="Buscar"
-          aria-label="Buscar">
-          <svg
+          class="w-10 h-10 flex items-center justify-center text-vscode-textMuted opacity-40 cursor-not-allowed"
+          title="Buscar (no disponible)"
+          aria-label="Buscar (no disponible)"
+          disabled>
+          <svg aria-hidden="true"
             class="w-5 h-5"
             fill="none"
             stroke="currentColor"
@@ -210,42 +320,15 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           >
         </button>
 
-        <!-- Source Control -->
-        <button
-          class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors relative"
-          title="Control de código fuente"
-          aria-label="Control de código fuente">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
-            ><path
-              d="M21.007 8.222A3.738 3.738 0 0 0 15.045 5.2a3.737 3.737 0 0 0 1.156 6.583 2.988 2.988 0 0 1-2.668 1.67h-2.99a4.456 4.456 0 0 0-2.989 1.165V7.559a3.738 3.738 0 1 0-1.494 0v8.882a3.738 3.738 0 1 0 1.494.028 2.99 2.99 0 0 1 2.989-2.758h2.99a4.489 4.489 0 0 0 4.223-3.11 3.746 3.746 0 0 0 3.251-2.379zM3.01 3.987A2.24 2.24 0 1 1 5.25 6.227 2.24 2.24 0 0 1 3.01 3.987zm4.48 16.026a2.24 2.24 0 1 1-2.24-2.24 2.24 2.24 0 0 1 2.24 2.24zM18.258 9.84a2.24 2.24 0 1 1 2.24-2.24 2.24 2.24 0 0 1-2.24 2.24z"
-            ></path></svg
-          >
-          <span
-            class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-vscode-accent text-[10px] font-bold rounded-full flex items-center justify-center text-vscode-bg"
-            >1</span
-          >
-        </button>
-
-        <!-- Extensions -->
-        <button
-          class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors"
-          title="Extensiones"
-          aria-label="Extensiones">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
-            ><path
-              d="M13.5 1.515a3 3 0 0 0-3 0L7.5 3.026 4.567 1.529a3 3 0 0 0-3 0A3 3 0 0 0 .067 4.037v5.072a3 3 0 0 0 1.5 2.598L4.5 13.2v2.972a3 3 0 0 0 1.5 2.598l3 1.733a3 3 0 0 0 3 0l3-1.733a3 3 0 0 0 1.5-2.598V13.2l2.933-1.494A3 3 0 0 0 20.933 9.1V4.037a3 3 0 0 0-1.5-2.508 3 3 0 0 0-3 0L13.5 3.026l-3-1.511z"
-            ></path></svg
-          >
-        </button>
-
         <div class="flex-1"></div>
 
         <!-- User -->
         <button
-          class="w-10 h-10 flex items-center justify-center text-vscode-textMuted hover:text-vscode-text hover:bg-vscode-surface0/30 transition-colors"
-          title="Cuenta"
-          aria-label="Cuenta">
-          <svg
+          class="w-10 h-10 flex items-center justify-center text-vscode-textMuted opacity-40 cursor-not-allowed"
+          title="Cuenta (no disponible)"
+          aria-label="Cuenta (no disponible)"
+          disabled>
+          <svg aria-hidden="true"
             class="w-5 h-5"
             fill="none"
             stroke="currentColor"
@@ -259,21 +342,24 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           >
         </button>
 
-        <!-- Settings + Easter Eggs (React Island) -->
+        <!-- Settings (React Island) -->
         <ActivityBarWidgets client:load />
       </aside>
 
       <!-- ===== SIDEBAR EXPLORER (hidden on mobile) ===== -->
       <aside
+        aria-label="Explorador de archivos"
+        data-en-aria="File explorer"
         class="hidden md:flex w-56 bg-vscode-sidebar border-r border-vscode-border flex-col shrink-0 select-none">
         <!-- Explorer Header -->
         <div
           class="flex items-center justify-between px-4 py-2 text-[11px] tracking-wider uppercase text-vscode-textMuted">
-          <span>Explorador</span>
+          <span data-en="Explorer">Explorador</span>
           <button
-            class="hover:text-vscode-text transition-colors text-lg leading-none"
-            aria-label="Más acciones del explorador"
-            title="Más acciones del explorador">···</button
+            class="text-vscode-textMuted text-lg leading-none opacity-50 cursor-not-allowed"
+            aria-label="Más acciones del explorador (no disponible)"
+            title="Más acciones del explorador (no disponible)"
+            disabled>···</button
           >
         </div>
 
@@ -281,7 +367,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <div class="px-2">
           <div
             class="flex items-center gap-1 px-2 py-0.5 text-[11px] tracking-wider uppercase text-vscode-textMuted font-semibold">
-            <svg
+            <svg aria-hidden="true"
               class="w-3 h-3 transform rotate-90"
               fill="currentColor"
               viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg
@@ -295,7 +381,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
             <a
               href="/"
               class={`flex items-center gap-2 px-2 py-0.5 rounded hover:bg-vscode-surface0/50 transition-colors w-full text-left ${activeFile === "README.md" ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle"}`}>
-              <svg
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-accent shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -310,7 +396,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
             <a
               href="/proyectos"
               class={`flex items-center gap-2 px-2 py-0.5 rounded hover:bg-vscode-surface0/50 transition-colors w-full text-left ${activeFile === "proyectos.json" ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle"}`}>
-              <svg
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-yellow shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -318,24 +404,23 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
                   d="M5 3h2v2H5v5a2 2 0 01-2 2 2 2 0 012 2v5h2v2H5c-1.07-.27-2-.9-2-2v-4a2 2 0 00-2-2H0v-2h1a2 2 0 002-2V5a2 2 0 012-2m14 0a2 2 0 012 2v4a2 2 0 002 2h1v2h-1a2 2 0 00-2 2v4a2 2 0 01-2 2h-2v-2h2v-5a2 2 0 012-2 2 2 0 01-2-2V5h-2V3h2M12 15a1 1 0 110 2 1 1 0 010-2m-4 0a1 1 0 110 2 1 1 0 010-2m8 0a1 1 0 110 2 1 1 0 010-2z"
                 ></path></svg
               >
-              <span>proyectos.json</span>
+              <span data-en="projects.json">proyectos.json</span>
             </a>
 
-            <!-- snake.astro -->
+            <!-- experiencia.md / experience.md -->
             <a
-              href="/snake"
-              class={`flex items-center gap-2 px-2 py-0.5 rounded hover:bg-vscode-surface0/50 transition-colors w-full text-left ${activeFile === "snake.astro" ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle"}`}>
-              <span
-                class="w-4 h-4 shrink-0 flex items-center justify-center text-[12px]"
-                >🐍</span
-              >
-              <span>snake.astro</span>
+              href={experienceHref}
+              data-en-href="/experience"
+              aria-current={isExperience ? "page" : undefined}
+              class={`flex items-center gap-2 px-2 py-0.5 rounded hover:bg-vscode-surface0/50 transition-colors w-full text-left ${isExperience ? "bg-vscode-surface0/70 text-vscode-text" : "text-vscode-textSubtle"}`}>
+              <svg aria-hidden="true" class="w-4 h-4 text-vscode-green shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 3h16v18H4zM8 8h8M8 12h8M8 16h5" /></svg>
+              <span data-en="experience.md">{experienceLabel}</span>
             </a>
 
             <!-- habilidades.ts -->
             <div
-              class="flex items-center gap-2 px-2 py-0.5 rounded hover:bg-vscode-surface0/50 transition-colors w-full text-left text-vscode-textSubtle grayscale cursor-not-allowed opacity-50">
-              <svg
+              class="flex items-center gap-2 px-2 py-0.5 w-full text-left text-vscode-textSubtle">
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-accent shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -343,13 +428,13 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
                   d="M3 3h18v18H3V3m1.5 1.5v15h15v-15h-15M6 8.73c0-1.36 1.05-2.4 2.98-2.4 1.04 0 1.78.37 2.31.92l-.97.96c-.37-.37-.78-.56-1.31-.56-.81 0-1.31.53-1.31 1.32v4.06c0 .79.5 1.32 1.31 1.32.53 0 .97-.21 1.31-.56l.97.96c-.53.55-1.27.92-2.31.92C7.05 15.67 6 14.63 6 13.27V8.73m6 0c0-1.36 1.05-2.4 2.98-2.4 1.04 0 1.78.37 2.31.92l-.97.96c-.37-.37-.78-.56-1.31-.56-.81 0-1.31.53-1.31 1.32v4.06c0 .79.5 1.32 1.31 1.32.53 0 .97-.21 1.31-.56l.97.96c-.53.55-1.27.92-2.31.92-1.93 0-2.98-1.04-2.98-2.4V8.73z"
                 ></path></svg
               >
-              <span>habilidades.ts</span>
+              <span data-en="skills.ts">habilidades.ts</span>
             </div>
 
             <!-- estilos.css -->
             <div
-              class="flex items-center gap-2 px-2 py-0.5 rounded hover:bg-vscode-surface0/50 transition-colors w-full text-left text-vscode-textSubtle grayscale cursor-not-allowed opacity-50">
-              <svg
+              class="flex items-center gap-2 px-2 py-0.5 w-full text-left text-vscode-textSubtle">
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-pink shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -357,13 +442,13 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
                   d="M9.6 2.4L8.4 4H5.2A1.2 1.2 0 004 5.2v13.6A1.2 1.2 0 005.2 20h13.6a1.2 1.2 0 001.2-1.2V5.2A1.2 1.2 0 0018.8 4h-3.2L14.4 2.4H9.6z"
                 ></path></svg
               >
-              <span>estilos.css</span>
+              <span data-en="styles.css">estilos.css</span>
             </div>
 
             <!-- Folders -->
             <div
               class="flex items-center gap-2 px-2 py-0.5 text-vscode-textSubtle">
-              <svg
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-peach shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -371,11 +456,11 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
                   d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"
                 ></path></svg
               >
-              <span>componentes</span>
+              <span data-en="components">componentes</span>
             </div>
             <div
               class="flex items-center gap-2 px-2 py-0.5 text-vscode-textSubtle">
-              <svg
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-peach shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -387,7 +472,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
             </div>
             <div
               class="flex items-center gap-2 px-2 py-0.5 text-vscode-textSubtle">
-              <svg
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-peach shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -402,7 +487,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
             <button
               id="config-json-btn"
               class="flex items-center gap-2 px-2 py-0.5 rounded hover:bg-vscode-surface0/50 transition-colors w-full text-left text-vscode-textSubtle">
-              <svg
+              <svg aria-hidden="true"
                 class="w-4 h-4 text-vscode-yellow shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -419,30 +504,37 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <div class="mt-4 px-2">
           <div
             class="flex items-center gap-1 px-2 py-0.5 text-[11px] tracking-wider uppercase text-vscode-textMuted font-semibold">
-            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"
+            <svg aria-hidden="true" class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"
               ><path d="M8 5v14l11-7z"></path></svg
             >
-            <span>Scripts NPM</span>
+            <span data-en="NPM scripts">Scripts NPM</span>
           </div>
           <div
             class="flex items-center gap-1 px-2 py-0.5 text-[11px] tracking-wider uppercase text-vscode-textMuted font-semibold">
-            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"
+            <svg aria-hidden="true" class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"
               ><path d="M8 5v14l11-7z"></path></svg
             >
-            <span>Esquema</span>
+            <span data-en="Outline">Esquema</span>
+          </div>
+        </div>
+        <div class="mt-auto border-t border-vscode-border px-3 py-3 flex items-center justify-between">
+          <span class="text-[11px] uppercase tracking-wider text-vscode-textMuted" data-en="Language">Idioma</span>
+          <div role="group" aria-label="Cambiar idioma" data-en-aria="Change language" class="flex gap-1">
+            <button type="button" data-set-locale="es" aria-label="Español" aria-pressed="false" class="h-10 w-10 rounded text-xs font-semibold text-vscode-textMuted hover:text-vscode-text aria-pressed:bg-vscode-accent/20 aria-pressed:text-vscode-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent">ES</button>
+            <button type="button" data-set-locale="en" aria-label="English" aria-pressed="false" class="h-10 w-10 rounded text-xs font-semibold text-vscode-textMuted hover:text-vscode-text aria-pressed:bg-vscode-accent/20 aria-pressed:text-vscode-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vscode-accent">EN</button>
           </div>
         </div>
       </aside>
 
       <!-- ===== EDITOR AREA ===== -->
-      <main class="flex-1 flex flex-col overflow-hidden">
+      <main id="main-content" tabindex="-1" class="flex-1 flex flex-col overflow-hidden">
         <!-- Tab Bar -->
         <div
-          class="flex items-center bg-vscode-tabs border-b border-vscode-border h-9 shrink-0 overflow-x-auto scrollbar-none">
+          class="hidden md:flex items-center bg-vscode-tabs border-b border-vscode-border h-9 shrink-0 overflow-x-auto scrollbar-none">
           <a
             href="/"
             class={`flex items-center gap-2 px-4 py-1.5 text-[13px] border-r border-vscode-border h-full transition-colors shrink-0 ${activeFile === "README.md" ? "bg-vscode-tabActive text-vscode-text border-t-2 border-t-vscode-accent" : "bg-vscode-tabInactive text-vscode-textMuted hover:text-vscode-text"}`}>
-            <svg
+            <svg aria-hidden="true"
               class="w-4 h-4 text-vscode-accent"
               fill="currentColor"
               viewBox="0 0 24 24"
@@ -451,25 +543,11 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
               ></path></svg
             >
             <span>README.md</span>
-            <span
-              class="w-3.5 h-3.5 ml-1 flex items-center justify-center rounded hover:bg-vscode-surface0/50">
-              <svg
-                class="w-3 h-3"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                ><path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"></path></svg
-              >
-            </span>
           </a>
           <a
             href="/proyectos"
             class={`flex items-center gap-2 px-4 py-1.5 text-[13px] border-r border-vscode-border h-full transition-colors shrink-0 ${activeFile === "proyectos.json" ? "bg-vscode-tabActive text-vscode-text border-t-2 border-t-vscode-accent" : "bg-vscode-tabInactive text-vscode-textMuted hover:text-vscode-text"}`}>
-            <svg
+            <svg aria-hidden="true"
               class="w-4 h-4 text-vscode-yellow"
               fill="currentColor"
               viewBox="0 0 24 24"
@@ -477,43 +555,16 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
                 d="M5 3h2v2H5v5a2 2 0 01-2 2 2 2 0 012 2v5h2v2H5c-1.07-.27-2-.9-2-2v-4a2 2 0 00-2-2H0v-2h1a2 2 0 002-2V5a2 2 0 012-2m14 0a2 2 0 012 2v4a2 2 0 002 2h1v2h-1a2 2 0 00-2 2v4a2 2 0 01-2 2h-2v-2h2v-5a2 2 0 012-2 2 2 0 01-2-2V5h-2V3h2M12 15a1 1 0 110 2 1 1 0 010-2m-4 0a1 1 0 110 2 1 1 0 010-2m8 0a1 1 0 110 2 1 1 0 010-2z"
               ></path></svg
             >
-            <span>proyectos.json</span>
-            <span
-              class="w-3.5 h-3.5 ml-1 flex items-center justify-center rounded hover:bg-vscode-surface0/50">
-              <svg
-                class="w-3 h-3"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                ><path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"></path></svg
-              >
-            </span>
+            <span data-en="projects.json">proyectos.json</span>
           </a>
 
-          <!-- snake.astro tab -->
           <a
-            href="/snake"
-            class={`flex items-center gap-2 px-4 py-1.5 text-[13px] border-r border-vscode-border h-full transition-colors shrink-0 ${activeFile === "snake.astro" ? "bg-vscode-tabActive text-vscode-text border-t-2 border-t-vscode-accent" : "bg-vscode-tabInactive text-vscode-textMuted hover:text-vscode-text"}`}>
-            <span class="text-[14px]">🐍</span>
-            <span>snake.astro</span>
-            <span
-              class="w-3.5 h-3.5 ml-1 flex items-center justify-center rounded hover:bg-vscode-surface0/50">
-              <svg
-                class="w-3 h-3"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                ><path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"></path></svg
-              >
-            </span>
+            href={experienceHref}
+            data-en-href="/experience"
+            aria-current={isExperience ? "page" : undefined}
+            class={`flex items-center gap-2 px-4 py-1.5 text-[13px] border-r border-vscode-border h-full transition-colors shrink-0 ${isExperience ? "bg-vscode-tabActive text-vscode-text border-t-2 border-t-vscode-accent" : "bg-vscode-tabInactive text-vscode-textMuted hover:text-vscode-text"}`}>
+            <svg aria-hidden="true" class="w-4 h-4 text-vscode-green" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 3h16v18H4zM8 8h8M8 12h8M8 16h5" /></svg>
+            <span data-en="experience.md">{experienceLabel}</span>
           </a>
 
           <div class="flex-1"></div>
@@ -521,19 +572,21 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           <!-- Layout toggle buttons (hidden on mobile) -->
           <div class="hidden md:flex items-center gap-1 pr-3">
             <button
-              class="p-1 text-vscode-textMuted hover:text-vscode-text transition-colors"
-              aria-label="Toggle Panel"
-              title="Toggle Panel">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"
+              class="p-1 text-vscode-textMuted opacity-50 cursor-not-allowed"
+              aria-label="Panel (no disponible)"
+              title="Panel (no disponible)"
+              disabled>
+              <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"
                 ><path d="M1 1h6v6H1V1zm8 0h6v6H9V1zM1 9h6v6H1V9zm8 0h6v6H9V9z"
                 ></path></svg
               >
             </button>
             <button
-              class="p-1 text-vscode-textMuted hover:text-vscode-text transition-colors"
-              aria-label="Toggle Secondary Side Bar"
-              title="Toggle Secondary Side Bar">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"
+              class="p-1 text-vscode-textMuted opacity-50 cursor-not-allowed"
+              aria-label="Barra lateral secundaria (no disponible)"
+              title="Barra lateral secundaria (no disponible)"
+              disabled>
+              <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"
                 ><path d="M1 1h14v3H1V1zm0 5h14v3H1V6zm0 5h14v3H1v-3z"
                 ></path></svg
               >
@@ -544,7 +597,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <!-- Breadcrumb (hidden on mobile) -->
         <div
           class="hidden md:flex items-center px-4 py-1 text-[12px] text-vscode-textMuted bg-vscode-editor border-b border-vscode-border/50 shrink-0">
-          <span>Vista Previa: {activeFile}</span>
+          <span data-en={`Preview: ${activeFileEn}`}>Vista Previa: {activeFile}</span>
         </div>
 
         <!-- Editor Content -->
@@ -556,19 +609,20 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
 
     <!-- ===== STATUS BAR ===== -->
     <footer
-      class="flex items-center justify-between h-6 bg-vscode-statusbar border-t border-vscode-border text-[11px] select-none shrink-0 px-2">
+      class="relative z-[55] flex items-center justify-between h-6 bg-vscode-statusbar border-t border-vscode-border text-[11px] select-none shrink-0 px-2"
+      style="padding-bottom:env(safe-area-inset-bottom);height:calc(1.5rem + env(safe-area-inset-bottom))">
       <div class="flex items-center gap-3">
         <span
           class="flex items-center gap-1 text-vscode-text bg-vscode-accent/20 px-2 py-0.5 rounded-sm">
-          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16"
+          <svg aria-hidden="true" class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16"
             ><path
               d="M14.85 3c-.28 0-.55.11-.75.31L7 10.41 2.9 6.31a1.06 1.06 0 00-1.5 1.5l4.85 4.85c.2.2.47.31.75.31s.55-.11.75-.31l7.85-7.85c.2-.2.31-.47.31-.75 0-.59-.47-1.06-1.06-1.06z"
             ></path></svg
           >
-          main*
+          <strong>portfolio-cristianaros</strong>*
         </span>
         <span class="text-vscode-textMuted items-center gap-1 hidden md:flex">
-          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16"
+          <svg aria-hidden="true" class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16"
             ><path d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8z"
             ></path></svg
           >
@@ -581,7 +635,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
         <span class="hidden md:inline">UTF-8</span>
         <span class="hidden sm:inline">Markdown</span>
         <span class="flex items-center gap-1">
-          <svg
+          <svg aria-hidden="true"
             class="w-3 h-3 text-vscode-accent"
             fill="currentColor"
             viewBox="0 0 16 16"
@@ -595,9 +649,26 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
     </footer>
 
     <!-- ===== SCRIPTS ===== -->
-    <script is:inline>
-      // config.json -> toggle settings panel
-      document.addEventListener("DOMContentLoaded", () => {
+    <script>
+      // The router swaps layout controls; bind them again after every page load.
+      let layoutEvents;
+      document.addEventListener("astro:page-load", () => {
+        layoutEvents?.abort();
+        layoutEvents = new AbortController();
+        const { signal } = layoutEvents;
+        document.querySelectorAll<HTMLButtonElement>("[data-set-locale]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const selected = button.dataset.setLocale;
+            if (selected !== "es" && selected !== "en") return;
+            if (document.documentElement.lang === selected) return;
+            try { localStorage.setItem("portfolio-locale", selected); } catch {}
+            if (/^\/(experience|experiencia)\/?$/.test(location.pathname)) {
+              location.assign(selected === "en" ? "/experience" : "/experiencia");
+            } else {
+              location.reload();
+            }
+          }, { signal });
+        });
         const configBtn = document.getElementById("config-json-btn");
         const mobileConfigBtn = document.getElementById(
           "mobile-config-json-btn",
@@ -607,13 +678,13 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           window.dispatchEvent(new CustomEvent("toggle-settings"));
         };
 
-        if (configBtn) configBtn.addEventListener("click", openSettings);
+        if (configBtn) configBtn.addEventListener("click", openSettings, { signal });
         if (mobileConfigBtn) {
           mobileConfigBtn.addEventListener("click", () => {
             // Close mobile drawer first, then open settings
             closeMobileDrawer();
             setTimeout(openSettings, 200);
-          });
+          }, { signal });
         }
 
         // Mobile drawer logic
@@ -626,6 +697,7 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           if (!overlay || !drawer) return;
           overlay.classList.remove("hidden");
           if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+          closeBtn?.focus();
           requestAnimationFrame(() => {
             overlay.style.opacity = "1";
             drawer.style.transform = "translateX(0)";
@@ -637,17 +709,39 @@ const { title = "portfolio_dev — README.md", activeFile = "README.md" } =
           overlay.style.opacity = "0";
           drawer.style.transform = "translateX(-100%)";
           if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+          if (menuBtn) menuBtn.focus();
           setTimeout(() => overlay.classList.add("hidden"), 250);
         }
 
-        if (menuBtn) menuBtn.addEventListener("click", openMobileDrawer);
-        if (closeBtn) closeBtn.addEventListener("click", closeMobileDrawer);
-        if (overlay) {
-          overlay.addEventListener("click", (e) => {
-            if (e.target === overlay) closeMobileDrawer();
-          });
-        }
+        if (menuBtn) menuBtn.addEventListener("click", openMobileDrawer, { signal });
+        if (closeBtn) closeBtn.addEventListener("click", closeMobileDrawer, { signal });
+        overlay?.querySelector("button")?.addEventListener("click", closeMobileDrawer, { signal });
+        overlay?.querySelectorAll("a[href]").forEach((link) =>
+          link.addEventListener("click", closeMobileDrawer, { signal }),
+        );
+        document.addEventListener("keydown", (event) => {
+          if (menuBtn?.getAttribute("aria-expanded") !== "true") return;
+          if (event.key === "Escape") {
+            closeMobileDrawer();
+            return;
+          }
+          if (event.key !== "Tab" || !drawer) return;
+          const focusable = Array.from(
+            drawer.querySelectorAll("a[href], button:not([disabled])"),
+          );
+          if (focusable.length === 0) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
+        }, { signal });
       });
     </script>
+    <SpeedInsights />
   </body>
 </html>

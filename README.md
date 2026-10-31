@@ -18,7 +18,7 @@ Un portfolio interactivo diseñado como un **IDE (Visual Studio Code)**, constru
 
 ## 📋 Descripción
 
-Este portfolio simula la interfaz de **Visual Studio Code**, ofreciendo una experiencia inmersiva donde cada sección del portfolio es un "archivo" dentro del editor. Incluye explorador de archivos, pestañas, terminal decorativa, panel de configuración funcional y un easter egg 🐍.
+Este portfolio simula la interfaz de **Visual Studio Code**, ofreciendo una experiencia inmersiva donde cada sección del portfolio es un "archivo" dentro del editor. Incluye explorador de archivos, pestañas, terminal decorativa y panel de configuración funcional.
 
 ## ✨ Características
 
@@ -27,11 +27,11 @@ Este portfolio simula la interfaz de **Visual Studio Code**, ofreciendo una expe
 | 🗂️ **Layout IDE**     | Interfaz completa de VS Code con activity bar, explorador, pestañas y barra de estado              |
 | 📄 **README.md**      | Página principal con presentación, stack tecnológico y botones de contacto                         |
 | 📦 **proyectos.json** | Galería de proyectos renderizada como JSON                                                         |
-| 🐍 **snake.astro**    | Juego Snake estilo Nokia como easter egg integrado en el editor                                    |
+| 📊 **Experiencia**    | Páginas `/experiencia` (español) y `/experience` (inglés), accesibles desde las pestañas y el explorador |
 | ⚙️ **Configuración**  | Panel funcional: tema oscuro/claro, tamaño de fuente, familia tipográfica, visibilidad de terminal |
 | 🎨 **Temas**          | Modo oscuro (Catppuccin Mocha) y modo claro con persistencia en localStorage                       |
 | 💻 **Terminal**       | Terminal decorativa con animación de comandos git y npm                                            |
-| 🧩 **Konami Code**    | Código secreto oculto en el panel de configuración                                                 |
+| 🌐 **Idiomas**        | Selector ES/EN en el explorador con preferencia guardada; las rutas de experiencia fijan su idioma |
 
 ## 🏗️ Estructura del Proyecto
 
@@ -40,18 +40,20 @@ src/
 ├── components/
 │   ├── Hero.tsx                 # Sección principal con saludo y CTA
 │   ├── ProjectGallery.tsx       # Galería de proyectos
+│   ├── Experience.tsx           # Experiencia profesional
 │   ├── SettingsPanel.tsx        # Panel de configuración funcional
-│   ├── SnakeInline.tsx          # Juego Snake estilo Nokia
 │   ├── Terminal.tsx             # Terminal decorativa
 │   ├── ActivityBarWidgets.tsx   # Widgets de la barra lateral
 │   ├── ThemeToggle.tsx          # Toggle de tema
 │   └── CodeBlock.tsx            # Bloques de código con sintaxis
+├── i18n.ts                      # Detección del idioma del navegador
 ├── layouts/
 │   └── IDELayout.astro          # Layout principal tipo IDE
 ├── pages/
 │   ├── index.astro              # README.md — Página principal
 │   ├── proyectos.astro          # proyectos.json — Proyectos
-│   └── snake.astro              # snake.astro — Easter egg
+│   ├── experiencia.astro        # Experiencia en español
+│   └── experience.astro         # Experiencia en inglés
 └── styles/
     └── global.css               # Variables CSS y temas
 ```
@@ -95,18 +97,16 @@ El servidor estará disponible en `http://localhost:4321/`
 
 ### En progreso
 
-- [ ] 🔧 Arreglar la configuración dentro de `snake.astro` — El panel de settings debe respetar el contexto visual de la página del juego
 - [ ] 🔧 Arreglar la configuración general — Algunas opciones necesitan pulirse para funcionar de forma consistente en todas las páginas
 - [ ] 📄 Dar utilidad a `config.json` — Actualmente es un archivo decorativo en el explorador; debe ser funcional
-- [ ] 🐍 Mejorar el juego Snake — Agregar efectos de sonido, animaciones, niveles de dificultad y mejores controles táctiles
 - [ ] 🔄 Evitar re-animaciones al navegar — Las secciones del explorador (README.md, proyectos.json) no deberían repetir la animación de carga al volver a ellas
 - [ ] 🖥️ Corregir la animación de la terminal — La terminal no debería volver a ejecutar su animación de comandos al cambiar de pestaña
 - [ ] 📱 Mejorar vista mobile — Adaptar el layout IDE para pantallas pequeñas con una experiencia optimizada
 
 ### Futuras mejoras
 
-- [ ] 🌐 Internacionalización (ES/EN)
-- [ ] 📊 Sección de experiencia laboral
+- [x] 🌐 Internacionalización (ES/EN) automática según el navegador
+- [x] 📊 Sección de experiencia laboral
 - [ ] 🎯 Integración con API de GitHub para mostrar repos en tiempo real
 - [ ] 🔔 Notificaciones simuladas estilo VS Code
 - [ ] 📝 Blog integrado como archivos `.md`

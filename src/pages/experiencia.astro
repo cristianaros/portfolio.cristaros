@@ -1,0 +1,16 @@
+---
+import IDELayout from "../layouts/IDELayout.astro";
+import Experience from "../components/Experience";
+import Terminal from "../components/Terminal";
+import "../styles/global.css";
+---
+
+<IDELayout title="Cristian Aros | FullStack Developer" activeFile="experiencia.md">
+  <div class="flex flex-col h-full">
+    <div class="flex-1 overflow-y-auto" id="editor-content">
+      <Experience locale="es" />
+      <div class="py-8"></div>
+    </div>
+    <Terminal client:visible transition:persist="terminal" />
+  </div>
+</IDELayout>

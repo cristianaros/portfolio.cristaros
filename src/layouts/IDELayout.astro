@@ -2,6 +2,7 @@
 import ActivityBarWidgets from "../components/ActivityBarWidgets";
 import { ClientRouter } from "astro:transitions";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
   title?: string;
@@ -743,5 +744,6 @@ const activeFileEn = activeFile === "proyectos.json" ? "projects.json" : activeF
       });
     </script>
     <SpeedInsights />
+    <Analytics />
   </body>
 </html>
